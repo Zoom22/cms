@@ -1,0 +1,11 @@
+{
+    "name": "user/cms",
+    "description": "blog cms",
+    "type": "project",
+    "require": {
+        "illuminate/database": "^8.34"
+    },
+    "autoload": {
+        "psr-4": {"App\\": "src/"}
+    }
+}

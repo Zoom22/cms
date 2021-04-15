@@ -1,0 +1,1 @@
+<?php include APP_DIR . '/layout/base/footer.php';
