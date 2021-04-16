@@ -150,10 +150,12 @@ class UserController
                     'profile',
                     [
                         'title' => 'Профиль пользователя',
+                        'id' => $user->id,
                         'name' => $user->name,
                         'email' => $user->email,
                         'about' => $user->about,
                         'created_at' => $user->created_at,
+                        'subscribed' => $user->subscribed,
                     ]);
             }
         }

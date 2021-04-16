@@ -1229,23 +1229,41 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
       <NotNull>1</NotNull>
       <DefaultExpression>&apos;nophoto.jpg&apos;</DefaultExpression>
     </column>
-    <column id="303" parent="292" name="group">
+    <column id="303" parent="292" name="about">
       <Position>6</Position>
+      <DataType>text|0s</DataType>
+    </column>
+    <column id="304" parent="292" name="group">
+      <Position>7</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>3</DefaultExpression>
     </column>
-    <index id="304" parent="292" name="email_UNIQUE">
+    <column id="305" parent="292" name="updated_at">
+      <Position>8</Position>
+      <DataType>datetime|0s</DataType>
+    </column>
+    <column id="306" parent="292" name="created_at">
+      <Position>9</Position>
+      <DataType>datetime|0s</DataType>
+    </column>
+    <column id="307" parent="292" name="subscribed">
+      <Position>10</Position>
+      <DataType>tinyint(1)|0s</DataType>
+      <NotNull>1</NotNull>
+      <DefaultExpression>0</DefaultExpression>
+    </column>
+    <index id="308" parent="292" name="email_UNIQUE">
       <ColNames>email</ColNames>
       <Unique>1</Unique>
       <Type>btree</Type>
     </index>
-    <key id="305" parent="292" name="PRIMARY">
+    <key id="309" parent="292" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="306" parent="292" name="email_UNIQUE">
+    <key id="310" parent="292" name="email_UNIQUE">
       <ColNames>email</ColNames>
       <UnderlyingIndexName>email_UNIQUE</UnderlyingIndexName>
     </key>

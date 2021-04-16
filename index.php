@@ -6,7 +6,7 @@ ini_set('display_errors',true);
 require_once 'bootstrap.php';
 
 use App\{Router, Application, View};
-use App\Controller\{UserController};
+use App\Controller\{UserController, SubscribeController};
 use App\Model\Book;
 
 $router = new Router();
@@ -22,6 +22,7 @@ $router->get('/register', UserController::class . '@register');
 $router->post('/register', UserController::class . '@addUser');
 $router->get('/logout', UserController::class . '@logout');
 $router->get('/profile/*', UserController::class . '@profile');
+$router->post('/subscribe/*', SubscribeController::class . '@subscribe');
 
 $application = new Application($router);
 $application->run();
