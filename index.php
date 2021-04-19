@@ -23,6 +23,7 @@ $router->post('/register', UserController::class . '@addUser');
 $router->get('/logout', UserController::class . '@logout');
 $router->get('/profile/*', UserController::class . '@profile');
 $router->post('/subscribe/*', SubscribeController::class . '@subscribe');
+$router->post('/profile/edit', UserController::class . '@profileEdit');
 
 $application = new Application($router);
 $application->run();
