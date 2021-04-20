@@ -19,7 +19,7 @@ class NoteController
         ->orderBy('created_at', 'desc')
         ->get();
         $notes = [];
-        foreach ($allNotes as $note) {
+        foreach ($thisPageNotes as $note) {
             $notes[] = [
                 'id' => $note->id,
                 'title' => $note->title,
