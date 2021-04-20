@@ -11,6 +11,7 @@
 
     <!-- Custom styles for this template-->
     <link href="/css/my.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Playfair&#43;Display:700,900&amp;display=swap" rel="stylesheet">
   </head>
 
   <body>
