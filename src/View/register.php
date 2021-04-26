@@ -49,7 +49,7 @@
 
     <div class="checkbox mb-3">
         <label>
-            <input type="checkbox" name="agreement" <?=$data['agreement'] ?? ''?>> Согласен с <a class="stretched-link font-weight-bold" href="/static/rules">правилами</a> сайта.
+            <input type="checkbox" name="agreement" <?=$data['agreement'] ?? ''?>> Согласен с <a class="stretched-link font-weight-bold" href="/rules">правилами</a> сайта.
         </label>
     </div>
     <button class="btn btn-lg btn-primary btn-block" type="submit">Зарегистрироваться</button>

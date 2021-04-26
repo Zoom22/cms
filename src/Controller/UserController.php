@@ -13,7 +13,7 @@ class UserController
         //todo если будет повторяться вынести в родительский класс
         session_start();
     }
-    public function addUser()
+    public function store()
     {
         $registrationData = $this->validateRegistrationData();
         if (!empty($registrationData['error'])) {
@@ -30,7 +30,7 @@ class UserController
         header('location: /');
     }
 
-    public function register()
+    public function create()
     {
         if (!isAuthorized()) {
             return new View('register', ['title' => 'Регистрация']);
@@ -82,7 +82,7 @@ class UserController
         return $result;
     }
 
-    public function auth()
+    public function authorization()
     {
         if (!isAuthorized()) {
             $data = [];
@@ -95,7 +95,7 @@ class UserController
         }
     }
 
-    public function authorization()
+    public function login()
     {
         $authData = $this->validateAuthData();
         if (!empty($authData['error'])) {
@@ -140,7 +140,7 @@ class UserController
         header('location: /');
     }
 
-    public function profile($params = '')
+    public function show($params = '')
     {
         if (!empty($params) && isAuthorized()) {
             $id = intval($params);

@@ -6,7 +6,7 @@ use \Illuminate\Database\Eloquent\Model;
 
 class User extends Model
 {
-    protected $guarded = ['photo', 'group'];
+    protected $guarded = ['id', 'photo', 'group'];
 
     public function authorize(bool $setCookie = false)
     {

@@ -31,4 +31,22 @@ class NoteController
         return new View('index', ['title' => 'Главная страница', 'notes' => $notes]);
     }
 
+    public function show($id)
+    {
+        session_start(); //todo где общая точка входа?
+        $thisPageNote = Note::find($id);
+        if ($thisPageNote) {
+            $note = [
+                'title' => $thisPageNote->title,
+                'text' => $thisPageNote->text,
+                'created_at' => $thisPageNote->created_at,
+                'author' => $thisPageNote->user->name,
+                'author_id' => $thisPageNote->user->id,
+
+            ];
+            return new View('notes.show', ['title' => $note['title'], 'note' => $note]);
+        } else {
+            throw new NotFoundException('Статья не найдена', 404);
+        }
+    }
 }
