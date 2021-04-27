@@ -6,13 +6,8 @@ use App\Exception\NotFoundException;
 use App\View;
 use App\Model\User;
 
-class UserController
+class UserController extends Controller
 {
-    public function __construct()
-    {
-        //todo если будет повторяться вынести в родительский класс
-        session_start();
-    }
     public function store()
     {
         $registrationData = $this->validateRegistrationData();

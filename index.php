@@ -6,20 +6,20 @@ ini_set('display_errors',true);
 require_once 'bootstrap.php';
 
 use App\{Router, Application, View};
-use App\Controller\{UserController, SubscribeController, NoteController, PageController};
+use App\Controller\{UserController, SubscribeController, NoteController, StaticPageController};
 use App\Model\Book;
 
 $router = new Router();
 
 $router->get('/', NoteController::class . '@showAll'); //переделать на показ через show, если не передан $id
 $router->get('/note/*', NoteController::class . '@show');
-
-$router->get('/page/create', PageController::class . '@create');
-$router->post('/page/store', PageController::class . '@store');
-$router->get('/page/*', PageController::class . '@show');
-$router->get('/rules', PageController::class . '@rules');
-$router->get('/contacts', PageController::class . '@contacts');
-$router->get('/about', PageController::class . '@about');
+$router->get('/page/*', NoteController::class . '@showAll');
+$router->get('/static/create', StaticPageController::class . '@create');
+$router->post('/static/store', StaticPageController::class . '@store');
+$router->get('/static/*', StaticPageController::class . '@show');
+$router->get('/rules', StaticPageController::class . '@rules');
+$router->get('/contacts', StaticPageController::class . '@contacts');
+$router->get('/about', StaticPageController::class . '@about');
 
 
 $router->get('/auth', UserController::class . '@authorization');

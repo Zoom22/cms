@@ -6,7 +6,7 @@ use App\Model\Page;
 use App\View;
 use App\Exception\NotFoundException;
 
-class PageController
+class StaticPageController extends Controller
 {
     public function create()
     {

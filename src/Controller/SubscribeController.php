@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Model\User;
 
-class SubscribeController
+class SubscribeController extends Controller
 {
     public function subscribe($id)
     {

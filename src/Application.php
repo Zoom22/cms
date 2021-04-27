@@ -41,6 +41,7 @@ class Application
     {
         $config = Config::getInstance();
         $config->set('db', require APP_DIR . '/configs/db.php');
+        $config->set('pagination', require APP_DIR . '/configs/pagination.php');
         $capsule = new Capsule;
         $capsule->addConnection($config->get('db'));
         $capsule->setAsGlobal();
