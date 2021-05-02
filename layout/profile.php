@@ -52,7 +52,8 @@
 <!--todo добавить проверку на авторизацию - пользователь этот профиль или админ-->
 <div class="row">
     <div class="col-4 mt-2">
-        <form action="/subscribe/<?=$id ?>" method="post">
+        <form method="post">
+            <input type="text" name="id" value="<?=$id?>" hidden>
             <button type="submit" class="btn btn-outline-success btn-sm">
                 <?=!$subscribed ? 'Под' : 'От'?>писаться
             </button>

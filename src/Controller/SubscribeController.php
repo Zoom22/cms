@@ -6,8 +6,9 @@ use App\Model\User;
 
 class SubscribeController extends Controller
 {
-    public function subscribe($id)
+    public function subscribe()
     {
+        $id = $_POST['id'];
         $user = User::find($id);
         if (!empty($user)) {
             if ($user->subscribed) {
@@ -18,6 +19,7 @@ class SubscribeController extends Controller
             $user->save();
         }
         //todo else выкинуть Exception - пользователь не найден.
-        header('location: /profile/' . $id);
+//        header('location: /profile/' . $id);
+        header('location: ' . $_SERVER['REQUEST_URI']);
     }
 }

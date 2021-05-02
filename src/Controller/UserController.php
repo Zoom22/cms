@@ -214,4 +214,15 @@ class UserController extends Controller
         }
         //todo else выкинуть Exception - пользователь не найден.
     }
+
+    public static function isAdmin()
+    {
+        return  !empty($_SESSION['user']['group']) && $_SESSION['user']['group'] == 1;
+    }
+
+    public static function isModerator()
+    {
+        $group = $_SESSION['user']['group'] ?? false;
+        return  !empty($group) && ($group == 2 || $group == 1);
+    }
 }

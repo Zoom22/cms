@@ -1,3 +1,6 @@
+<?php
+use App\Controller\UserController;
+?>
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -34,6 +37,29 @@
             <a class="nav-link" href="/contacts">Контакты</a>
           </li>
         </ul>
+          <?php if (UserController::isModerator()) {?>
+            <ul class="navbar-nav mr-auto">
+                <?php if (UserController::isAdmin()) {?>
+            <li class="nav-item active">
+                <a class="nav-link" href="/users">Пользователи <span class="sr-only">(current)</span></a>
+            </li>
+                <?php } ?>
+            <li class="nav-item">
+                <a class="nav-link" href="/about">Статьи</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/contacts">Комментарии</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/contacts">Страницы</a>
+            </li>
+                <?php if (UserController::isAdmin()) {?>
+                    <li class="nav-item">
+                <a class="nav-link" href="/contacts">Настройки</a>
+            </li>
+                <?php } ?>
+        </ul>
+          <?php } ?>
         <ul class="navbar-nav my-2 my-lg-0">
             <li class="nav-item dropdown ">
                 <a class="nav-link dropdown-toggle" href="#" id="dropdown02" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

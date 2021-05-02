@@ -119,7 +119,7 @@ CREATE TABLE `users` (
   `subscribed` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `email_UNIQUE` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -128,7 +128,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'Вася','11@11.com','$2y$10$B31zIhSrG3ffWtU5rvt7H.OCaC1mPmN7P4Nzu1/Bcnka5vxGjI.M.','39286.jpeg','Я Вася. Просто Вася. Что еще сказать?!',2,'2021-04-27 07:37:00','2021-04-11 07:21:08',1),(2,'Администратор','is.zoom@yandex.ru','$2y$10$VOTQWe83txxg1Nr/MIJ16uAgJCBfamoTER.uY7hTLDSJTXHJ0X.XC','admin.jpg','Самый главный на сайте. Можно обращаться по всем вопросам.',1,'2021-04-27 14:38:58','2021-04-12 07:21:08',1),(3,'Пользователь','user@example.com','$2y$10$9W2/PAbH0XKET3ORJx.lauccCjYotT7bgK2hpwk8hzJ0aduV1VZly','nophoto.jpg',NULL,3,'2021-04-13 07:21:08','2021-04-13 07:21:08',0),(4,'NewUser','new@user.com','$2y$10$3IMLiiKEXZRPIadoow7ajOlILxB9EUJXvnGN7lrmmEzIX1ETioqee','nophoto.jpg',NULL,3,'2021-04-14 07:21:08','2021-04-14 07:21:08',0),(6,'Степан Разин','razin@stepan.com','$2y$10$HniP0vMR0bh1Nj5LasgiEONFdYWFODUBbHp/5h0UbSoCc9sCrHF2S','nophoto.jpg',NULL,3,'2021-04-15 07:21:08','2021-04-15 07:21:08',0),(7,'Иван Петрович Павлов','22@22.com','$2y$10$xsVuFkvagXPNj00zWblt9eKhAxGIursOUlR7DIYvDuvDo2R8XWBzK','Ivan_Pavlov.jpg','Иван Павлов - русский и советский учёный, физиолог, вивисектор, создатель науки о высшей нервной деятельности, физиологической школы; лауреат Нобелевской премии по физиологии или медицине 1904 года «за работу по физиологии пищеварения».',3,'2021-04-20 09:06:37','2021-04-15 10:32:00',0);
+INSERT INTO `users` VALUES (1,'Вася','11@11.com','$2y$10$B31zIhSrG3ffWtU5rvt7H.OCaC1mPmN7P4Nzu1/Bcnka5vxGjI.M.','39286.jpeg','Я Вася. Просто Вася. Что еще сказать?!',2,'2021-04-27 07:37:00','2021-04-11 07:21:08',1),(2,'Администратор','is.zoom@yandex.ru','$2y$10$VOTQWe83txxg1Nr/MIJ16uAgJCBfamoTER.uY7hTLDSJTXHJ0X.XC','admin.jpg','Самый главный на сайте. Можно обращаться по всем вопросам.',1,'2021-05-02 13:00:15','2021-04-12 07:21:08',0),(3,'Пользователь','user@example.com','$2y$10$9W2/PAbH0XKET3ORJx.lauccCjYotT7bgK2hpwk8hzJ0aduV1VZly','nophoto.jpg',NULL,3,'2021-04-13 07:21:08','2021-04-13 07:21:08',0),(4,'NewUser','new@user.com','$2y$10$3IMLiiKEXZRPIadoow7ajOlILxB9EUJXvnGN7lrmmEzIX1ETioqee','nophoto.jpg',NULL,3,'2021-05-02 13:00:19','2021-04-14 07:21:08',1),(6,'Степан Разин','razin@stepan.com','$2y$10$HniP0vMR0bh1Nj5LasgiEONFdYWFODUBbHp/5h0UbSoCc9sCrHF2S','razin.jpg','Степа́н Тимофе́евич Ра́зин, известный также как Сте́нька Ра́зин[3] (1630 год, Зимовейская-на-Дону, Русское царство — 6 [16] июня 1671, Москва, Русское царство), — донской казак, предводитель восстания 1670—1671 годов, крупнейшего в истории допетровской России.',2,'2021-05-02 08:02:32','2021-04-15 07:21:08',1),(7,'Иван Петрович Павлов','22@22.com','$2y$10$xsVuFkvagXPNj00zWblt9eKhAxGIursOUlR7DIYvDuvDo2R8XWBzK','Ivan_Pavlov.jpg','Иван Павлов - русский и советский учёный, физиолог, вивисектор, создатель науки о высшей нервной деятельности, физиологической школы; лауреат Нобелевской премии по физиологии или медицине 1904 года «за работу по физиологии пищеварения».',3,'2021-05-02 13:07:15','2021-04-15 10:32:00',0),(8,'Тарас Бульба','44@44.com','$2y$10$FVlBuisq9mcfYyqcvw..8.2ltIqWEOB6qK86WiLmdsuJjzGcmNDwK','nophoto.jpg',NULL,3,'2021-05-02 13:39:15','2021-05-02 13:39:15',0);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -141,4 +141,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-04-27 20:33:38
+-- Dump completed on 2021-05-02 17:50:08

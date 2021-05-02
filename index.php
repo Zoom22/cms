@@ -6,7 +6,7 @@ ini_set('display_errors',true);
 require_once 'bootstrap.php';
 
 use App\{Router, Application, View};
-use App\Controller\{UserController, SubscribeController, NoteController, StaticPageController};
+use App\Controller\{UserController, SubscribeController, NoteController, StaticPageController, AdminController};
 use App\Model\Book;
 
 $router = new Router();
@@ -30,7 +30,10 @@ $router->get('/logout', UserController::class . '@logout');
 
 $router->post('/profile/edit', UserController::class . '@profileEdit');
 $router->get('/profile/*', UserController::class . '@show');
-$router->post('/subscribe/*', SubscribeController::class . '@subscribe');
+$router->post('/profile/*', SubscribeController::class . '@subscribe');
+
+$router->get('/users/*', AdminController::class . '@users');
+$router->post('/users', SubscribeController::class . '@subscribe');
 
 $application = new Application($router);
 $application->run();
