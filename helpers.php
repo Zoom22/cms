@@ -26,7 +26,11 @@ function includeView($templateName, $data)
 function loginUser(User $user)
 {
     $_SESSION['user'] = $user;
+    $_SESSION['email'] = $user->email;
     $_SESSION['login'] = true;
+    if (isset($_COOKIE['userLogin']) && $_COOKIE['userLogin'] !== $user->email) {
+        setcookie('itemsPerPage', $user->email, 1);
+    }
     setcookie('userLogin', $user->email, time() + 60 * 60 * 24 * 20, '/');
 }
 
@@ -92,6 +96,7 @@ function pagination($page, $items, $itemsPerPage, $baseUrl, $sfx = '') {
                             </li>';
         }
     }
+    $pagination .= '</nav></ul>';
 
     return $pagination;
 }

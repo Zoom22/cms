@@ -1,3 +1,4 @@
+<h4>Подписки</h4>
 <table class="table table-striped">
     <thead>
     <tr>

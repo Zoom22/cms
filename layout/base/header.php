@@ -48,7 +48,7 @@ use App\Controller\UserController;
             </li>
                 <?php } ?>
             <li class="nav-item">
-                <a class="nav-link" href="/about">Статьи</a>
+                <a class="nav-link" href="/notes">Статьи</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/contacts">Комментарии</a>

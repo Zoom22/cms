@@ -5,13 +5,17 @@ ini_set('display_errors',true);
 
 require_once 'bootstrap.php';
 
-use App\{Router, Application, View};
+use App\{Router, Application};
 use App\Controller\{UserController, SubscribeController, NoteController, StaticPageController, AdminController};
-use App\Model\Book;
 
 $router = new Router();
-
 $router->get('/', NoteController::class . '@showAll'); //переделать на показ через show, если не передан $id
+$router->post('/', SubscribeController::class . '@create');
+
+
+$router->get('/notes/*', AdminController::class . '@notes');
+$router->post('/notes/*', NoteController::class . '@delete');
+
 $router->get('/note/*', NoteController::class . '@show');
 $router->get('/page/*', NoteController::class . '@showAll');
 $router->get('/static/create', StaticPageController::class . '@create');
@@ -33,9 +37,9 @@ $router->get('/profile/*', UserController::class . '@show');
 $router->post('/profile/*', SubscribeController::class . '@subscribe');
 
 $router->get('/users/*', AdminController::class . '@users');
-$router->post('/users', SubscribeController::class . '@subscribe');
+$router->post('/users/*', SubscribeController::class . '@subscribe');
 $router->get('/subscribers/*', AdminController::class . '@subscribers');
-$router->post('/subscribers/*', SubscribeController::class . '@delete');
+$router->post('/subscribers/*', SubscribeController::class . '@subscribe');
 
 $application = new Application($router);
 $application->run();

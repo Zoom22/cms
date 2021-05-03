@@ -9,18 +9,22 @@ class SubscribeController extends Controller
 {
     public function subscribe()
     {
-        $id = $_POST['id'];
-        $user = User::find($id);
-        if (!empty($user)) {
-            if ($user->subscribed) {
-                $user->subscribed = 0;
-            } else {
-                $user->subscribed = 1;
+        $id = intval(clean($_POST['id']));
+        $subscriber = Subscriber::where('user_id', $id)->first();
+        if (isset($subscriber->id)) {
+            User::find($id)->update(['subscribed' => 0]);
+            Subscriber::destroy($subscriber->id);
+        } else {
+            $user = User::find($id);
+            if (!empty($user)) {
+                $subscriber = new Subscriber();
+                $subscriber->email = $user->email;
+                $subscriber->user_id = $user->id;
+                $subscriber->save();
+                $user->update(['subscribed' => 1]);
             }
-            $user->save();
         }
         //todo else выкинуть Exception - пользователь не найден.
-//        header('location: /profile/' . $id);
         header('location: ' . $_SERVER['REQUEST_URI']);
     }
 
@@ -29,5 +33,12 @@ class SubscribeController extends Controller
         $id = $_POST['id'];
         $subscriber = Subscriber::destroy($id);
         header('location: ' . $_SERVER['REQUEST_URI']);
+    }
+
+    public function create()
+    {
+        //принимает $_POST['email']
+        //сделать его валидацию, проверку на повтор в таблице подписки
+        //запись нового подписчика в БД
     }
 }

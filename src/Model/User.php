@@ -18,6 +18,10 @@ class User extends Model
             'group' => $this->group,
         ];
 
+        if (isset($_COOKIE['email']) && $_COOKIE['email'] !== $this->email) {
+            setcookie('itemsPerPage', 0, 1);
+        }
+
         if ($setCookie) {
             setcookie('email', $this->email, time()+60*60*24*30, "/");
         }

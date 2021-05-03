@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Config;
 use App\View;
-use App\Model\{User, Subscriber};
+use App\Model\{User, Subscriber, Note};
 
 class AdminController extends Controller
 {
@@ -33,6 +33,10 @@ class AdminController extends Controller
         $usersCount = User::all()->count();
         $usersPerPage = $config->get('admin.itemsPerPage');
 
+        if (!empty($_COOKIE['itemsPerPage'])) {
+            $usersPerPage = intval($_COOKIE['itemsPerPage']);
+        }
+
         if (isset($_GET['count'])) {
             if (intval($_GET['count']) >= 1) {
                 $usersPerPage = intval($_GET['count']);
@@ -41,7 +45,8 @@ class AdminController extends Controller
                 $usersPerPage = $usersCount;
             }
         }
-        $sfx = '?' . $_SERVER['QUERY_STRING'];
+        setcookie('itemsPerPage', $usersPerPage, time() + 60 * 60 * 24 * 20, '/');
+        $sfx = !empty($_SERVER['QUERY_STRING']) ? '?' . $_SERVER['QUERY_STRING'] : '';
         $pages = intval(($usersCount - 1) / $usersPerPage) + 1;
         $page = ($page < 1) ? 1 : $page;
         $page = ($page > $pages) ? $pages : $page;
@@ -51,6 +56,7 @@ class AdminController extends Controller
             ->get();
         $users = [];
         foreach ($thisPageUsers as $user) {
+
             $users[] = [
                 'id' => $user->id,
                 'name' => $user->name,
@@ -80,7 +86,9 @@ class AdminController extends Controller
 
         $usersCount = Subscriber::all()->count();
         $usersPerPage = $config->get('admin.itemsPerPage');
-
+        if (!empty($_COOKIE['itemsPerPage'])) {
+            $usersPerPage = intval($_COOKIE['itemsPerPage']);
+        }
         if (isset($_GET['count'])) {
             if (intval($_GET['count']) >= 1) {
                 $usersPerPage = intval($_GET['count']);
@@ -89,7 +97,8 @@ class AdminController extends Controller
                 $usersPerPage = $usersCount;
             }
         }
-        $sfx = '?' . $_SERVER['QUERY_STRING'];
+        setcookie('itemsPerPage', $usersPerPage, time() + 60 * 60 * 24 * 20, '/');
+        $sfx = !empty($_SERVER['QUERY_STRING']) ? '?' . $_SERVER['QUERY_STRING'] : '';
         $pages = intval(($usersCount - 1) / $usersPerPage) + 1;
         $page = ($page < 1) ? 1 : $page;
         $page = ($page > $pages) ? $pages : $page;
@@ -100,7 +109,6 @@ class AdminController extends Controller
         $users = [];
         foreach ($thisPageUsers as $user) {
             $name = is_object($user->user) ? $user->user->name : '';
-
             $users[] = [
                 'id' => $user->id,
                 'email'  => $user->email,
@@ -109,6 +117,7 @@ class AdminController extends Controller
                 'created_at' => $user->created_at,
             ];
         }
+
         return new View(
             'subscribers',
             [
@@ -117,6 +126,58 @@ class AdminController extends Controller
                 'page'  => $page,
                 'usersCount' => $usersCount,
                 'usersPerPage' => $usersPerPage,
+                'sfx' => $sfx,
+            ]);
+    }
+
+    public function notes($page = 1)
+    {
+        $config = Config::getInstance();
+        $orderBy = $config->get('admin.orderBy');
+        $sortBy = $config->get('admin.sortBy');
+
+        $notesCount = Note::all()->count();
+        $notesPerPage = $config->get('admin.itemsPerPage');
+        if (!empty($_COOKIE['itemsPerPage'])) {
+            $notesPerPage = intval($_COOKIE['itemsPerPage']);
+        }
+        if (isset($_GET['count'])) {
+            if (intval($_GET['count']) >= 1) {
+                $notesPerPage = intval($_GET['count']);
+            }
+            if ($_GET['count'] === "all") {
+                $notesPerPage = $notesCount;
+            }
+        }
+        setcookie('itemsPerPage', $notesPerPage, time() + 60 * 60 * 24 * 20, '/');
+        $sfx = !empty($_SERVER['QUERY_STRING']) ? '?' . $_SERVER['QUERY_STRING'] : '';
+        $pages = intval(($notesCount - 1) / $notesPerPage) + 1;
+        $page = ($page < 1) ? 1 : $page;
+        $page = ($page > $pages) ? $pages : $page;
+        $thisPageNotes = Note::offset($notesPerPage * ($page - 1))
+            ->limit($notesPerPage)
+            ->orderBy($sortBy, $orderBy)
+            ->get();
+        $notes = [];
+        foreach ($thisPageNotes as $note) {
+            $notes[] = [
+                'id' => $note->id,
+                'title'  => $note->title,
+                'image' => $note->image,
+                'updated_at' => $note->updated_at,
+                'name' => $note->user->name,
+                'user_id' => $note->user->id,
+            ];
+        }
+
+        return new View(
+            'notes',
+            [
+                'title' => 'Статьи' . ($page ? ' - ' . $page : ''),
+                'notes' => $notes,
+                'page'  => $page,
+                'notesCount' => $notesCount,
+                'notesPerPage' => $notesPerPage,
                 'sfx' => $sfx,
             ]);
     }

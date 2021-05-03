@@ -62,4 +62,11 @@ class NoteController extends Controller
             throw new NotFoundException('Статья не найдена', 404);
         }
     }
+
+    public function delete()
+    {
+        $id = $_POST['id'];
+        $note = Note::destroy($id);
+        header('location: ' . $_SERVER['REQUEST_URI']);
+    }
 }

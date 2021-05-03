@@ -8,4 +8,6 @@ foreach ($notes as $key => $note) {
 echo '<hr class="featurette-divider">';
 
 echo pagination($page, $notesCount, $notesPerPage, '/page/');
+
+include APP_DIR . '/layout/subscribe.php';
 include APP_DIR . '/layout/footer.php';	
