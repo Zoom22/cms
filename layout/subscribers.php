@@ -2,26 +2,27 @@
     <thead>
     <tr>
         <th scope="col">id</th>
-        <th scope="col">Имя</th>
         <th scope="col">E-mail</th>
-        <th scope="col">Роль</th>
-        <th scope="col">Зарегистрирован</th>
-        <th scope="col" class="text-center">Подписка</th>
+        <th scope="col">Пользователь</th>
+        <th scope="col">Дата подписки</th>
+        <th scope="col" class="text-center">Действие</th>
     </tr>
     </thead>
     <tbody>
     <?php foreach ($users as $user){ ?>
         <tr>
             <th scope="row"><?=$user['id']?></th>
-            <td><a href="/profile/<?=$user['id']?>"><?=$user['name']?></a></td>
             <td><?=$user['email']?></td>
-            <td><?=$user['group']?></td>
+            <td>
+                <?=empty($user['name']) ? 'Нет' :
+                '<a href="/profile/' . $user['user_id'] . '">' . $user['name'] . '</a>'?>
+            </td>
             <td><?=$user['created_at']?></td>
             <td class="text-center">
                 <form class="mb-0" method="post">
                     <input type="text" name="id" value="<?=$user['id']?>" hidden>
                     <button type="submit" class="btn btn-outline-success btn-sm">
-                        <?=$user['subscribed'] ? 'Подписан' : 'Не подписан'?>
+                        Удалить
                     </button>
                 </form>
             </td>
@@ -32,7 +33,7 @@
 
 <div class="row">
     <div class="col">
-        <?=pagination($page, $usersCount, $usersPerPage, '/users/', $sfx)?>
+        <?=pagination($page, $usersCount, $usersPerPage, '/subscribers/', $sfx)?>
     </div>
     <div class="col"> Отображать по
         <form method="get" id="select">

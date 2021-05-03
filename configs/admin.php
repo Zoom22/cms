@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'itemsPerPage' => 3,
+    'itemsPerPage' => 2,
     'orderBy' => 'asc',
     'sortBy' => 'created_at',
 ];

@@ -56,7 +56,7 @@ function isAuthorized()
 * @return string
 *
 */
-function pagination($page, $items, $itemsPerPage, $baseUrl) {
+function pagination($page, $items, $itemsPerPage, $baseUrl, $sfx = '') {
     $pages = intval(($items - 1) / $itemsPerPage) + 1;
     if ($pages == 1) {
         return '';
@@ -68,11 +68,11 @@ function pagination($page, $items, $itemsPerPage, $baseUrl) {
         if ($page > 1) {
             $previous = $page - 1;
             $pagination .= '<li class="page-item">
-                                <a class="page-link" href="' . $baseUrl . $previous . '">Предыдущая</a>
+                                <a class="page-link" href="' . $baseUrl . $previous . $sfx . '">Предыдущая</a>
                             </li>';
             for($i = $page-3; $i < $page; $i++){
                 if($i > 0){
-                    $pagination .= '<li class="page-item"><a class="page-link" href="' . $baseUrl . $i . '">' . $i . '</a></li>';
+                    $pagination .= '<li class="page-item"><a class="page-link" href="' . $baseUrl . $i . $sfx . '">' . $i . '</a></li>';
                 }
             }
         }
@@ -80,7 +80,7 @@ function pagination($page, $items, $itemsPerPage, $baseUrl) {
                             <span class="page-link">' . $page . '</span>
                         </li>';
         for($i = $page + 1; $i <= $pages; $i++) {
-            $pagination .= '<li class="page-item"><a class="page-link" href="' . $baseUrl . $i . '">' . $i . '</a></li>';
+            $pagination .= '<li class="page-item"><a class="page-link" href="' . $baseUrl . $i . $sfx . '">' . $i . '</a></li>';
             if($i >= $page+3) {
                 break;
             }
@@ -88,7 +88,7 @@ function pagination($page, $items, $itemsPerPage, $baseUrl) {
         if ($page != $pages) {
             $next = $page + 1;
             $pagination .= '<li class="page-item">
-                                <a class="page-link" href="' . $baseUrl . $next . '">Следующая</a>
+                                <a class="page-link" href="' . $baseUrl . $next . $sfx . '">Следующая</a>
                             </li>';
         }
     }

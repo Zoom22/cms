@@ -41,7 +41,10 @@ use App\Controller\UserController;
             <ul class="navbar-nav mr-auto">
                 <?php if (UserController::isAdmin()) {?>
             <li class="nav-item active">
-                <a class="nav-link" href="/users">Пользователи <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="/users">Пользователи</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/subscribers">Подписки</a>
             </li>
                 <?php } ?>
             <li class="nav-item">

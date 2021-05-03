@@ -1,17 +1,11 @@
 'use strict';
 
 const toggleHidden = (...fields) => {
-
     fields.forEach((field) => {
-
         if (field.hidden === true) {
-
             field.hidden = false;
-
         } else {
-
             field.hidden = true;
-
         }
     });
 };
@@ -41,9 +35,16 @@ var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggl
 var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
     return new bootstrap.Tooltip(tooltipTriggerEl)
 });
+const avatar =document.getElementById('avatar');
+if (avatar) {
+    avatar.addEventListener('change', function (e) {
+        e.preventDefault();
+        const avatarForm = document.querySelector('#photo');
+        avatarForm.submit();
+    });
+}
 
-document.getElementById('avatar').addEventListener('change', function(e) {
-    e.preventDefault();
-    const avatarForm = document.querySelector('#photo');
-    avatarForm.submit();
-});
+document.getElementById("count").addEventListener('change', function () {
+        document.getElementById("select").submit();
+    });
+

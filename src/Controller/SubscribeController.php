@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Model\Subscriber;
 use App\Model\User;
 
 class SubscribeController extends Controller
@@ -20,6 +21,13 @@ class SubscribeController extends Controller
         }
         //todo else выкинуть Exception - пользователь не найден.
 //        header('location: /profile/' . $id);
+        header('location: ' . $_SERVER['REQUEST_URI']);
+    }
+
+    public function delete()
+    {
+        $id = $_POST['id'];
+        $subscriber = Subscriber::destroy($id);
         header('location: ' . $_SERVER['REQUEST_URI']);
     }
 }
