@@ -43,8 +43,34 @@ if (avatar) {
         avatarForm.submit();
     });
 }
-
-document.getElementById("count").addEventListener('change', function () {
+const count = document.getElementById("count");
+if (count) {
+    count.addEventListener('change', function () {
         document.getElementById("select").submit();
     });
+}
 
+$(function(){
+    $("#subscribe").on("submit", function(e){
+        e.preventDefault();
+        const error = document.querySelector('#error');
+        const success = document.querySelector('#success');
+        var formData = $(this).serializeArray();
+        $.ajax({
+            url: "/",
+            type: "POST",
+            data: formData,
+            cache: false,
+            success: function (data) {
+                if (data) {
+                    error.innerHTML = data;
+                    error.hidden = false;
+                    success.hidden = true;
+                } else {
+                    success.hidden = false;
+                    error.hidden = true;
+                }
+            }
+        });
+    });
+});

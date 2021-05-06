@@ -65,8 +65,59 @@ class NoteController extends Controller
 
     public function delete()
     {
-        $id = $_POST['id'];
+        $id = $_POST['id']; //todo валидация данных
         $note = Note::destroy($id);
         header('location: ' . $_SERVER['REQUEST_URI']);
+    }
+
+    public function create()
+    {
+        //вывод формы для создания страницы с загрузкой картинки
+
+        //проверка прав доступа
+        return new View('notes.create', ['title' => 'Новая запись в блоге']);
+    }
+
+    public function store()
+    {
+        //валидация и сохранение статьи, картинки и автора
+
+        //проверка прав доступа
+        //вывод сообщения об её адресе /cms/page/7
+        $noteData = $this->validateNoteData();
+        if (!empty($pageData['error'])) {
+            return new View(
+                'notes.create',
+                ['title' => 'Новая запись в блоге', 'data' => $noteData]
+            );
+        }
+        $note = Note::create([
+            'title' => $noteData['noteTitle'],
+            'text' => $noteData['text'],
+            'user_id' => $_SESSION['user']['id'],
+        ]);
+        //todo проверка на успешное добавление страницы
+
+        return new View(
+            'notes.show',
+            [
+                'title' => $note->title,
+                'note' => $note,
+            ]);
+    }
+
+    private function validateNoteData()
+    {
+        $result = ['error' => ''];
+        if (empty($_POST)) {
+            $result['error'] = 'Заполните заголовок страницы и её содержание';
+            return $result;
+        } elseif (empty($_POST['title'])) {
+            $result['error'] = 'Заполните заголовок страницы';
+        } elseif (empty($_POST['text'])) {
+            $result['error'] = 'Содержание страницы не может быть пустым';
+        }
+        $result += ['noteTitle' => clean($_POST['title']), 'text' => $_POST['text']];
+        return $result;
     }
 }

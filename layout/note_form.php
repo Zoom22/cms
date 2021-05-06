@@ -1,6 +1,6 @@
-<form class="form-signin" method="post" action="/static/store">
+<form class="form-signin" method="post" action="/notes/store">
     <div class="text-center mb-4">
-        <h1 class="h3 mb-3 font-weight-normal">Добавление информационной страницы</h1>
+        <h1 class="h3 mb-3 font-weight-normal">Добавление новой записи в блог</h1>
         <?php if (!empty($data['error'])) { ?>
             <div class="alert alert-danger" role="alert"><?=$data['error']?></div>
         <?php } ?>
@@ -12,7 +12,7 @@
     </div>
 
     <div class="form-label-group">
-        <label for="text" class="mt-3">Текст страницы</label>
+        <label for="text" class="mt-3">Текст записи</label>
         <textarea rows="12" id="text" class="form-control" placeholder="Текст страницы" name="text" value="<?=$data['text'] ?? ''?>" autofocus><?=$data['text'] ?? ''?></textarea>
     </div>
 

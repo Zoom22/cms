@@ -12,7 +12,8 @@ $router = new Router();
 $router->get('/', NoteController::class . '@showAll'); //переделать на показ через show, если не передан $id
 $router->post('/', SubscribeController::class . '@create');
 
-
+$router->get('/notes/create', NoteController::class . '@create');
+$router->post('/notes/store', NoteController::class . '@store');
 $router->get('/notes/*', AdminController::class . '@notes');
 $router->post('/notes/*', NoteController::class . '@delete');
 
@@ -20,6 +21,7 @@ $router->get('/note/*', NoteController::class . '@show');
 $router->get('/page/*', NoteController::class . '@showAll');
 $router->get('/static/create', StaticPageController::class . '@create');
 $router->post('/static/store', StaticPageController::class . '@store');
+$router->get('/statics/*', AdminController::class . '@statics');
 $router->get('/static/*', StaticPageController::class . '@show');
 $router->get('/rules', StaticPageController::class . '@rules');
 $router->get('/contacts', StaticPageController::class . '@contacts');
@@ -40,6 +42,7 @@ $router->get('/users/*', AdminController::class . '@users');
 $router->post('/users/*', SubscribeController::class . '@subscribe');
 $router->get('/subscribers/*', AdminController::class . '@subscribers');
 $router->post('/subscribers/*', SubscribeController::class . '@subscribe');
+
 
 $application = new Application($router);
 $application->run();

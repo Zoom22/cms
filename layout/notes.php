@@ -6,14 +6,14 @@
         <th scope="col">Название</th>
         <th scope="col">Автор</th>
         <th scope="col">Обновлена</th>
-        <th scope="col" class="text-center">Действие</th>
+        <th scope="col" class="text-center">Действия</th>
     </tr>
     </thead>
     <tbody>
     <?php foreach ($notes as $note){ ?>
         <tr>
             <th scope="row"><?=$note['id']?></th>
-            <td><a href="/note/<?=$note['id']?>"><?= mb_strimwidth($note['title'], 0, 65, '...')?></a></td>
+            <td><a href="/note/<?=$note['id']?>"><?= mb_strimwidth($note['title'], 0, 50, '...')?></a></td>
             <td><a href="/profile/<?=$note['user_id']?>"><?=$note['name']?></a></td>
             <td><?=$note['updated_at']?></td>
             <td class="text-center">
@@ -21,6 +21,9 @@
                     <input type="text" name="id" value="<?=$note['id']?>" hidden>
                     <button type="submit" class="btn btn-outline-success btn-sm">
                         Удалить
+                    </button>
+                    <button type="submit" class="btn btn-outline-success btn-sm">
+                        Изменить
                     </button>
                 </form>
             </td>

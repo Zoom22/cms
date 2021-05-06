@@ -4,10 +4,11 @@ namespace App\Controller;
 
 use App\Config;
 use App\View;
-use App\Model\{User, Subscriber, Note};
+use App\Model\{Page, User, Subscriber, Note};
 
 class AdminController extends Controller
 {
+    //todo повторяющийся код в каждом методе унифицировать и вынести куда-нибудь
     public function users($page = 1)
     {
         function group($groupId)
@@ -56,7 +57,6 @@ class AdminController extends Controller
             ->get();
         $users = [];
         foreach ($thisPageUsers as $user) {
-
             $users[] = [
                 'id' => $user->id,
                 'name' => $user->name,
@@ -178,6 +178,55 @@ class AdminController extends Controller
                 'page'  => $page,
                 'notesCount' => $notesCount,
                 'notesPerPage' => $notesPerPage,
+                'sfx' => $sfx,
+            ]);
+    }
+
+    public function statics($page = 1)
+    {
+        $config = Config::getInstance();
+        $orderBy = $config->get('admin.orderBy');
+        $sortBy = $config->get('admin.sortBy');
+
+        $staticsCount = Page::all()->count();
+        $staticsPerPage = $config->get('admin.itemsPerPage');
+        if (!empty($_COOKIE['itemsPerPage'])) {
+            $staticsPerPage = intval($_COOKIE['itemsPerPage']);
+        }
+        if (isset($_GET['count'])) {
+            if (intval($_GET['count']) >= 1) {
+                $staticsPerPage = intval($_GET['count']);
+            }
+            if ($_GET['count'] === "all") {
+                $staticsPerPage = $staticsCount;
+            }
+        }
+        setcookie('itemsPerPage', $staticsPerPage, time() + 60 * 60 * 24 * 20, '/');
+        $sfx = !empty($_SERVER['QUERY_STRING']) ? '?' . $_SERVER['QUERY_STRING'] : '';
+        $pages = intval(($staticsCount - 1) / $staticsPerPage) + 1;
+        $page = ($page < 1) ? 1 : $page;
+        $page = ($page > $pages) ? $pages : $page;
+        $thisPageStatics = Page::offset($staticsPerPage * ($page - 1))
+            ->limit($staticsPerPage)
+            ->orderBy($sortBy, $orderBy)
+            ->get();
+        $statics = [];
+        foreach ($thisPageStatics as $static) {
+            $statics[] = [
+                'id' => $static->id,
+                'title'  => $static->title,
+                'updated_at' => $static->updated_at,
+            ];
+        }
+
+        return new View(
+            'statics',
+            [
+                'title' => 'Страницы' . ($page ? ' - ' . $page : ''),
+                'statics' => $statics,
+                'page'  => $page,
+                'staticsCount' => $staticsCount,
+                'staticsPerPage' => $staticsPerPage,
                 'sfx' => $sfx,
             ]);
     }

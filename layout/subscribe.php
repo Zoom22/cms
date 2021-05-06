@@ -1,5 +1,7 @@
 <hr>
-<form method="post">
+<form method="post" id="subscribe">
+    <div class="alert alert-danger" id="error" hidden role="alert"></div>
+    <div class="alert alert-success" id="success" hidden role="alert">Подписка успешно оформлена</div>
 <div class="row mt-5 justify-content-center">
     <div class="col-auto">
         <label for="input" class="col-form-label">Для подписки на обновления введите E-mail</label>

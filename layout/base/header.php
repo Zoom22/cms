@@ -1,6 +1,7 @@
 <?php
 use App\Controller\UserController;
 ?>
+<!DOCTYPE HTML>
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -54,7 +55,7 @@ use App\Controller\UserController;
                 <a class="nav-link" href="/contacts">Комментарии</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/contacts">Страницы</a>
+                <a class="nav-link" href="/statics">Страницы</a>
             </li>
                 <?php if (UserController::isAdmin()) {?>
                     <li class="nav-item">

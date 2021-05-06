@@ -20,7 +20,7 @@
             <td><?=$user['created_at']?></td>
             <td class="text-center">
                 <form class="mb-0" method="post">
-                    <input type="text" name="id" value="<?=$user['id']?>" hidden>
+                    <input type="text" name="user_id" value="<?=$user['id']?>" hidden>
                     <button type="submit" class="btn btn-outline-success btn-sm">
                         <?=$user['subscribed'] ? 'Подписан' : 'Не подписан'?>
                     </button>
