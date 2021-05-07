@@ -225,4 +225,10 @@ class UserController extends Controller
         $group = $_SESSION['user']['group'] ?? false;
         return  !empty($group) && ($group == 2 || $group == 1);
     }
+
+    public static function isOwner($id)
+    {
+        $user_id = $_SESSION['user']['id'] ?? false;
+        return $user_id == $id;
+    }
 }

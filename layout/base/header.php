@@ -28,38 +28,38 @@ use App\Controller\UserController;
 
       <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="/">Главная <span class="sr-only">(current)</span></a>
+          <li class="nav-item <?=isActiveMenu('/')?>">
+            <a class="nav-link" href="/">Главная</a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item <?=isActiveMenu('/about')?>">
             <a class="nav-link" href="/about">О Блоге</a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item <?=isActiveMenu('/contacts')?>">
             <a class="nav-link" href="/contacts">Контакты</a>
           </li>
         </ul>
           <?php if (UserController::isModerator()) {?>
             <ul class="navbar-nav mr-auto">
                 <?php if (UserController::isAdmin()) {?>
-            <li class="nav-item active">
+            <li class="nav-item <?=isActiveMenu('/users')?>">
                 <a class="nav-link" href="/users">Пользователи</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item <?=isActiveMenu('/subscribers')?>">
                 <a class="nav-link" href="/subscribers">Подписки</a>
             </li>
                 <?php } ?>
-            <li class="nav-item">
+            <li class="nav-item  <?=isActiveMenu('/notes')?>">
                 <a class="nav-link" href="/notes">Статьи</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/contacts">Комментарии</a>
+            <li class="nav-item  <?=isActiveMenu('/comments')?>">
+                <a class="nav-link" href="/comments">Комментарии</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item  <?=isActiveMenu('/statics')?>">
                 <a class="nav-link" href="/statics">Страницы</a>
             </li>
                 <?php if (UserController::isAdmin()) {?>
-                    <li class="nav-item">
-                <a class="nav-link" href="/contacts">Настройки</a>
+                    <li class="nav-item  <?=isActiveMenu('/settings')?>">
+                <a class="nav-link" href="/settings">Настройки</a>
             </li>
                 <?php } ?>
         </ul>

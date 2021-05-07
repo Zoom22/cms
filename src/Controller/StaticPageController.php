@@ -12,14 +12,20 @@ class StaticPageController extends Controller
     {
         //вывод формы создания статичной страницы
 
-        //проверка прав доступа
+        if (!UserController::isModerator()) {
+            throw new \App\Exception\ForbiddenException("Недостаточно прав.", 403);
+        }
+
         return new View('pages.create', ['title' => 'Создание информационной страницы']);
     }
 
     public function store()
     {
         //валидация и сохранение в БД статичной страницы
-        //проверка прав доступа
+        if (!UserController::isModerator()) {
+            throw new \App\Exception\ForbiddenException("Недостаточно прав.", 403);
+        }
+
         //вывод сообщения об её адресе /cms/page/7
         $pageData = $this->validatePageData();
         if (!empty($pageData['error'])) {
@@ -70,12 +76,18 @@ class StaticPageController extends Controller
 
     public function edit()
     {
-        //проверка прав доступа
+        if (!UserController::isModerator()) {
+            throw new \App\Exception\ForbiddenException("Недостаточно прав.", 403);
+        }
+
         //вызов статичной страницы на редактирование
     }
 
     public function update()
     {
+        if (!UserController::isModerator()) {
+            throw new \App\Exception\ForbiddenException("Недостаточно прав.", 403);
+        }
         //проверка прав доступа
         //валидация и сохранение отредактированной страницы
     }

@@ -49,3 +49,5 @@
         </form>
     </div>
 </div>
+    <hr>
+    <button class="btn btn-primary">Добавить запись в блоге</button>

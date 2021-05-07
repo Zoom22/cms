@@ -65,6 +65,9 @@ class NoteController extends Controller
 
     public function delete()
     {
+        if (!UserController::isModerator()) {
+            throw new \App\Exception\ForbiddenException("Недостаточно прав.", 403);
+        }
         $id = $_POST['id']; //todo валидация данных
         $note = Note::destroy($id);
         header('location: ' . $_SERVER['REQUEST_URI']);
@@ -72,17 +75,21 @@ class NoteController extends Controller
 
     public function create()
     {
+        if (!UserController::isModerator()) {
+            throw new \App\Exception\ForbiddenException("Недостаточно прав.", 403);
+        }
         //вывод формы для создания страницы с загрузкой картинки
 
-        //проверка прав доступа
         return new View('notes.create', ['title' => 'Новая запись в блоге']);
     }
 
     public function store()
     {
+        if (!UserController::isModerator()) {
+            throw new \App\Exception\ForbiddenException("Недостаточно прав.", 403);
+        }
         //валидация и сохранение статьи, картинки и автора
 
-        //проверка прав доступа
         //вывод сообщения об её адресе /cms/page/7
         $noteData = $this->validateNoteData();
         if (!empty($pageData['error'])) {

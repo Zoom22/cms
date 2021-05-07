@@ -100,3 +100,16 @@ function pagination($page, $items, $itemsPerPage, $baseUrl, $sfx = '') {
 
     return $pagination;
 }
+
+function isActiveMenu($link)
+{
+    $uri = trim($_SERVER['REQUEST_URI'], '/');
+    $link = trim($link, '/');
+    if ($link == $uri || preg_match('/^' . $link . '\/\w+/', $uri)) {
+        return 'active';
+    } elseif ($link == '' && preg_match('/^page\/\w+/', $uri)){
+        return 'active';
+    } else {
+        return '';
+    }
+}

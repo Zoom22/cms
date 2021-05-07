@@ -9,6 +9,11 @@ class SubscribeController extends Controller
 {
     public function subscribe()
     {
+        //Как тут быть с разграничением прав?
+        //вариант владелец по user_id или админ
+        if (!UserController::isAdmin()) {
+            throw new \App\Exception\ForbiddenException("Недостаточно прав.", 403);
+        }
         $id = isset($_POST['id']) ? intval(clean($_POST['id'])) : 0;
         $userId = isset($_POST['user_id']) ? intval(clean($_POST['user_id'])) : 0;
 

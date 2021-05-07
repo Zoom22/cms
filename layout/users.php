@@ -16,7 +16,15 @@
             <th scope="row"><?=$user['id']?></th>
             <td><a href="/profile/<?=$user['id']?>"><?=$user['name']?></a></td>
             <td><?=$user['email']?></td>
-            <td><?=$user['group']?></td>
+            <td>
+                <form>
+                    <select class="form-select form-select-sm">
+                        <option <?=$user['group'] == 1 ? 'selected ' : ''?>value="1">Администратор</option>
+                        <option <?=$user['group'] == 2 ? 'selected ' : ''?>value="1">Контент-менеджер</option>
+                        <option <?=$user['group'] == 3 ? 'selected ' : ''?>value="1">Пользователь</option>
+                    </select>
+                </form>
+            </td>
             <td><?=$user['created_at']?></td>
             <td class="text-center">
                 <form class="mb-0" method="post">
@@ -38,8 +46,8 @@
     <div class="col"> Отображать по
         <form method="get" id="select">
         <select class="form-select form-select-sm" id="count" name="count" aria-label="select">
-            <option <?=$usersPerPage == 1 ? 'selected ' : ''?>="1">1</option>
-            <option <?=$usersPerPage == 2 ? 'selected ' : ''?> value="2">2</option>
+            <option <?=$usersPerPage == 1 ? 'selected ' : ''?>value="1">1</option>
+            <option <?=$usersPerPage == 2 ? 'selected ' : ''?>value="2">2</option>
             <option <?=$usersPerPage == 3 ? 'selected ' : ''?>value="3">3</option>
             <option <?=$usersPerPage == 4 ? 'selected ' : ''?>value="4">4</option>
             <option <?=$usersPerPage == 5 ? 'selected ' : ''?>value="5">5</option>

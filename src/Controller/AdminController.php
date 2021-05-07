@@ -11,21 +11,14 @@ class AdminController extends Controller
     //todo повторяющийся код в каждом методе унифицировать и вынести куда-нибудь
     public function users($page = 1)
     {
-        function group($groupId)
-        {
-            switch ($groupId) {
-                case 1:
-                    return "Администратор";
-                case 2:
-                    return "Контент-менеджер";
-                case 3:
-                    return "Пользователь";
-            }
-        }
         //todo подумать на счет вывода количества статей и комментариев
 
         //todo подумать как хранить настойки интерфейса для текущего пользователя
         //скорее всего в куках
+
+        if (!UserController::isAdmin()) {
+            throw new \App\Exception\ForbiddenException("Недостаточно прав.", 403);
+        }
 
         $config = Config::getInstance();
         $orderBy = $config->get('admin.orderBy');
@@ -61,7 +54,7 @@ class AdminController extends Controller
                 'id' => $user->id,
                 'name' => $user->name,
                 'email'  => $user->email,
-                'group' => group($user->group),
+                'group' => $user->group,
                 'created_at' => $user->created_at,
                 'subscribed' => $user->subscribed,
             ];
@@ -80,6 +73,10 @@ class AdminController extends Controller
 //может перенести в SubscribeController?
     public function subscribers($page = 1)
     {
+        if (!UserController::isAdmin()) {
+            throw new \App\Exception\ForbiddenException("Недостаточно прав.", 403);
+        }
+
         $config = Config::getInstance();
         $orderBy = $config->get('admin.orderBy');
         $sortBy = $config->get('admin.sortBy');
@@ -132,6 +129,10 @@ class AdminController extends Controller
 
     public function notes($page = 1)
     {
+        if (!UserController::isModerator()) {
+            throw new \App\Exception\ForbiddenException("Недостаточно прав.", 403);
+        }
+
         $config = Config::getInstance();
         $orderBy = $config->get('admin.orderBy');
         $sortBy = $config->get('admin.sortBy');
@@ -184,6 +185,10 @@ class AdminController extends Controller
 
     public function statics($page = 1)
     {
+        if (!UserController::isModerator()) {
+            throw new \App\Exception\ForbiddenException("Недостаточно прав.", 403);
+        }
+
         $config = Config::getInstance();
         $orderBy = $config->get('admin.orderBy');
         $sortBy = $config->get('admin.sortBy');

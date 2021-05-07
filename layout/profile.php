@@ -1,3 +1,7 @@
+<?php
+use App\Controller\UserController;
+?>
+
 <div class="row" xmlns="http://www.w3.org/1999/html">
     <div class="col-4">
         <form id="photo" enctype="multipart/form-data" method="post" action="/profile/edit">
@@ -5,7 +9,9 @@
                 <input type="text" name="id" value="<?=$id?>" hidden>
                 <img src="/layout/img/photo/<?=$photo?>" width="250" class="rounded" alt="Avatar">
             </label>
+            <?php if (UserController::isOwner($id) || UserController::isAdmin()) {?>
             <input type="file" name="avatar" id="avatar" hidden accept="image/jpeg, image/png">
+            <?php } ?>
         </form>
     </div>
     <div class="col-8 m-auto">
@@ -16,15 +22,19 @@
             </div>
             <div class="row" >
                 <div class="col-12 mb-2" id="about"><?=$about ?? 'Пользователь пока не оставил о себе информацию.'?></div>
+                <?php if (UserController::isOwner($id) || UserController::isAdmin()) {?>
                 <div class="col-12 mb-2" id="textarea" hidden>
                     <label for="about" class="form-label">Напишите что-нибудь о себе</label>
                     <textarea class="form-control" rows="5" name="about"><?=$about ?? ''?></textarea>
                 </div>
+                <?php } ?>
             </div>
             <!--todo добавить проверку на авторизацию - пользователь этот профиль или админ-->
             <div class="row">
                 <div class="col-12 mt-2">
+                    <?php if (UserController::isOwner($id) || UserController::isAdmin()) {?>
                     <input id="edit" type="submit" class="btn btn-outline-success" value="Изменить">
+                    <?php } ?>
                 </div>
             </div>
         </form>
@@ -49,7 +59,7 @@
 <div class="row mt-2">
     <div class="col-4">Подписка <?=!$subscribed ? 'не' : ''?> оформлена.</div>
 </div>
-<!--todo добавить проверку на авторизацию - пользователь этот профиль или админ-->
+<?php if (UserController::isOwner($id) || UserController::isAdmin()) {?>
 <div class="row">
     <div class="col-4 mt-2">
         <form method="post">
@@ -60,3 +70,4 @@
         </form>
     </div>
 </div>
+<?php }
