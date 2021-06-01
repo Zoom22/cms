@@ -35,7 +35,7 @@ var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggl
 var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
     return new bootstrap.Tooltip(tooltipTriggerEl)
 });
-const avatar =document.getElementById('avatar');
+const avatar = document.getElementById('avatar');
 if (avatar) {
     avatar.addEventListener('change', function (e) {
         e.preventDefault();
@@ -70,6 +70,23 @@ $(function(){
                     success.hidden = false;
                     error.hidden = true;
                 }
+            }
+        });
+    });
+});
+
+$(function(){
+    $("#group_form").on("change", function(e){
+        e.preventDefault();
+        var formData = $(this).serializeArray();
+        console.log(formData);
+        $.ajax({
+            url: "/users/change",
+            type: "POST",
+            data: formData,
+            cache: false,
+            success: function (data) {
+                console.log(data);
             }
         });
     });

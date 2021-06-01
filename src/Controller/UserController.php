@@ -231,4 +231,10 @@ class UserController extends Controller
         $user_id = $_SESSION['user']['id'] ?? false;
         return $user_id == $id;
     }
+
+    public function changeGroup()
+    {
+        echo "Ghbdtn";
+//        var_dump($_POST);
+    }
 }

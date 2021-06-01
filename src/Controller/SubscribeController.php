@@ -2,8 +2,8 @@
 
 namespace App\Controller;
 
-use App\Model\Subscriber;
-use App\Model\User;
+use App\Exception\ForbiddenException;
+use App\Model\{User, Subscriber};
 
 class SubscribeController extends Controller
 {
@@ -11,11 +11,11 @@ class SubscribeController extends Controller
     {
         //Как тут быть с разграничением прав?
         //вариант владелец по user_id или админ
-        if (!UserController::isAdmin()) {
-            throw new \App\Exception\ForbiddenException("Недостаточно прав.", 403);
-        }
         $id = isset($_POST['id']) ? intval(clean($_POST['id'])) : 0;
         $userId = isset($_POST['user_id']) ? intval(clean($_POST['user_id'])) : 0;
+        if (!UserController::isAdmin() && !UserController::isOwner($userId)) {
+            throw new ForbiddenException("Недостаточно прав.", 403);
+        }
 
         if (!empty($id)) {
             Subscriber::destroy($id);
@@ -43,7 +43,7 @@ class SubscribeController extends Controller
     public function delete()
     {
         $id = $_POST['id'];
-        $subscriber = Subscriber::destroy($id);
+        Subscriber::destroy($id);
         header('location: ' . $_SERVER['REQUEST_URI']);
     }
 

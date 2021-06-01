@@ -40,6 +40,8 @@ $router->post('/profile/*', SubscribeController::class . '@subscribe');
 
 $router->get('/users/*', AdminController::class . '@users');
 $router->post('/users/*', SubscribeController::class . '@subscribe');
+$router->post('/users/change/', UserController::class . '@changeGroup');
+
 $router->get('/subscribers/*', AdminController::class . '@subscribers');
 $router->post('/subscribers/*', SubscribeController::class . '@subscribe');
 
