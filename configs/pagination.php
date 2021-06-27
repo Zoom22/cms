@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'notesPerPage' => 2,
+    'notesPerPage' => 4,
     'orderBy' => 'desc',
     'sortBy' => 'created_at',
 ];

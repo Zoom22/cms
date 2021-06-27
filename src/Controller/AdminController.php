@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Config;
 use App\View;
-use App\Model\{Page, User, Subscriber, Note};
+use App\Model\{Comment, Page, User, Subscriber, Note};
 
 class AdminController extends Controller
 {
@@ -182,6 +182,66 @@ class AdminController extends Controller
                 'sfx' => $sfx,
             ]);
     }
+
+    public function comments($page = 1)
+    {
+        if (!UserController::isModerator()) {
+            throw new \App\Exception\ForbiddenException("Недостаточно прав.", 403);
+        }
+
+        $config = Config::getInstance();
+        $orderBy = $config->get('admin.orderBy');
+        $sortBy = $config->get('admin.sortBy');
+
+        $commentsCount = Comment::all()->count();
+        $commentsPerPage = $config->get('admin.itemsPerPage');
+        if (!empty($_COOKIE['itemsPerPage'])) {
+            $commentsPerPage = intval($_COOKIE['itemsPerPage']);
+        }
+        if (isset($_GET['count'])) {
+            if (intval($_GET['count']) >= 1) {
+                $commentsPerPage = intval($_GET['count']);
+            }
+            if ($_GET['count'] === "all") {
+                $commentsPerPage = $commentsCount;
+            }
+        }
+        setcookie('itemsPerPage', $commentsPerPage, time() + 60 * 60 * 24 * 20, '/');
+        $sfx = !empty($_SERVER['QUERY_STRING']) ? '?' . $_SERVER['QUERY_STRING'] : '';
+        $pages = intval(($commentsCount - 1) / $commentsPerPage) + 1;
+        $page = ($page < 1) ? 1 : $page;
+        $page = ($page > $pages) ? $pages : $page;
+        $thisPageComments = Comment::join('users', 'author_id', '=', 'users.id')
+            ->select('comments.*', 'users.name as author')
+            ->offset($commentsPerPage * ($page - 1))
+            ->limit($commentsPerPage)
+            ->orderBy($sortBy, $orderBy)
+            ->get();
+        $comments = [];
+        foreach ($thisPageComments as $comment) {
+            $comments[] = [
+                'id' => $comment->id,
+                'author'  => $comment->author,
+                'author_id'  => $comment->author_id,
+                'note_id'  => $comment->note_id,
+                'text'  => $comment->text,
+                'updated_at' => $comment->updated_at,
+                'published' => $comment->published,
+            ];
+        }
+
+        return new View(
+            'comments',
+            [
+                'title' => 'Страницы' . ($page ? ' - ' . $page : ''),
+                'comments' => $comments,
+                'page'  => $page,
+                'commentsCount' => $commentsCount,
+                'commentsPerPage' => $commentsPerPage,
+                'sfx' => $sfx,
+            ]);
+    }
+
 
     public function statics($page = 1)
     {

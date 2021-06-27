@@ -6,7 +6,7 @@ ini_set('display_errors',true);
 require_once 'bootstrap.php';
 
 use App\{Router, Application};
-use App\Controller\{UserController, SubscribeController, NoteController, StaticPageController, AdminController};
+use App\Controller\{UserController, SubscribeController, NoteController, CommentController, StaticPageController, AdminController};
 
 $router = new Router();
 $router->get('/', NoteController::class . '@showAll'); //переделать на показ через show, если не передан $id
@@ -44,6 +44,9 @@ $router->post('/users/change/', UserController::class . '@changeGroup');
 
 $router->get('/subscribers/*', AdminController::class . '@subscribers');
 $router->post('/subscribers/*', SubscribeController::class . '@subscribe');
+
+$router->post('/note/*', CommentController::class . '@store');
+$router->get('/comments/*', AdminController::class . '@comments');
 
 
 $application = new Application($router);

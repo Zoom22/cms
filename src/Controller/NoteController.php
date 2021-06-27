@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Config;
 use App\Exception\NotFoundException;
+use App\Model\Comment;
 use App\View;
 use App\Model\Note;
 
@@ -55,9 +56,15 @@ class NoteController extends Controller
                 'created_at' => $thisPageNote->created_at,
                 'author' => $thisPageNote->user->name,
                 'author_id' => $thisPageNote->user->id,
+                'id' => $id,
 
             ];
-            return new View('notes.show', ['title' => $note['title'], 'note' => $note]);
+//        $comments = Comment::join('users', 'author_id', '=', 'users.id')
+//            ->select('comments.*', 'users.name as author', 'users.photo')
+//            ->where('note_id', $id)
+//            ->get();
+            $comments = CommentController::getComments($id);
+            return new View('notes.show', ['title' => $note['title'], 'note' => $note, 'comments' => $comments]);
         } else {
             throw new NotFoundException('Статья не найдена', 404);
         }
