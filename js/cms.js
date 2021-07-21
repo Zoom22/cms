@@ -76,14 +76,14 @@ $(function(){
 });
 
 $(function(){
-    $("#group_form").on("change", function(e){
+    $(".group").on("change", function(e){
         e.preventDefault();
-        var formData = $(this).serializeArray();
-        console.log(formData);
+        var id = $(this).attr('data-user_id');
+        var group = $(this).val();
         $.ajax({
             url: "/users/change",
             type: "POST",
-            data: formData,
+            data: { 'id' : id, 'group' : group },
             cache: false,
             success: function (data) {
                 console.log(data);

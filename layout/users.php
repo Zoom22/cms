@@ -18,8 +18,7 @@
             <td><?=$user['email']?></td>
             <td>
                 <form method="post">
-                    <input type="text" name="user_id" value="<?=$user['id']?>" hidden>
-                    <select class="form-select form-select-sm">
+                    <select class="form-select form-select-sm group" data-user_id="<?=$user['id']?>" <?=$activeUserId == $user['id'] ? 'disabled' : ''?>>
                         <option <?=$user['group'] == 1 ? 'selected ' : ''?>value="1">Администратор</option>
                         <option <?=$user['group'] == 2 ? 'selected ' : ''?>value="2">Контент-менеджер</option>
                         <option <?=$user['group'] == 3 ? 'selected ' : ''?>value="3">Пользователь</option>

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Config;
+use App\Exception\ForbiddenException;
 use App\View;
 use App\Model\{Comment, Page, User, Subscriber, Note};
 
@@ -17,7 +18,7 @@ class AdminController extends Controller
         //скорее всего в куках
 
         if (!UserController::isAdmin()) {
-            throw new \App\Exception\ForbiddenException("Недостаточно прав.", 403);
+            throw new ForbiddenException("Недостаточно прав.", 403);
         }
 
         $config = Config::getInstance();
@@ -64,6 +65,7 @@ class AdminController extends Controller
             [
                 'title' => 'Пользователи' . ($page ? ' - ' . $page : ''),
                 'users' => $users,
+                'activeUserId' => $_SESSION['user']['id'],
                 'page'  => $page,
                 'usersCount' => $usersCount,
                 'usersPerPage' => $usersPerPage,
@@ -74,7 +76,7 @@ class AdminController extends Controller
     public function subscribers($page = 1)
     {
         if (!UserController::isAdmin()) {
-            throw new \App\Exception\ForbiddenException("Недостаточно прав.", 403);
+            throw new ForbiddenException("Недостаточно прав.", 403);
         }
 
         $config = Config::getInstance();
@@ -130,7 +132,7 @@ class AdminController extends Controller
     public function notes($page = 1)
     {
         if (!UserController::isModerator()) {
-            throw new \App\Exception\ForbiddenException("Недостаточно прав.", 403);
+            throw new ForbiddenException("Недостаточно прав.", 403);
         }
 
         $config = Config::getInstance();
@@ -186,7 +188,7 @@ class AdminController extends Controller
     public function comments($page = 1)
     {
         if (!UserController::isModerator()) {
-            throw new \App\Exception\ForbiddenException("Недостаточно прав.", 403);
+            throw new ForbiddenException("Недостаточно прав.", 403);
         }
 
         $config = Config::getInstance();
@@ -246,7 +248,7 @@ class AdminController extends Controller
     public function statics($page = 1)
     {
         if (!UserController::isModerator()) {
-            throw new \App\Exception\ForbiddenException("Недостаточно прав.", 403);
+            throw new ForbiddenException("Недостаточно прав.", 403);
         }
 
         $config = Config::getInstance();
