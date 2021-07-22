@@ -87,6 +87,10 @@ $(function(){
             cache: false,
             success: function (data) {
                 console.log(data);
+                if (data) {
+                    document.getElementById('notification').innerHTML = data;
+                    $('.toast').toast('show');
+                }
             }
         });
     });
