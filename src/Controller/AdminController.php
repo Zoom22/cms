@@ -50,7 +50,24 @@ class AdminController extends Controller
             ->orderBy($sortBy, $orderBy)
             ->get();
         $users = [];
-        foreach ($thisPageUsers as $user) {
+        $ss = User::select(User::raw('    `users`.*,
+    (SELECT 
+            COUNT(`notes`.`id`)
+        FROM
+            `notes`
+        WHERE
+            `users`.`id` = `notes`.`user_id`) AS notesCount,
+    (SELECT 
+            COUNT(`comments`.`id`)
+        FROM
+            `comments`
+        WHERE
+            `users`.`id` = `comments`.`author_id`) AS commentsCount'))
+            ->offset($usersPerPage * ($page - 1))
+            ->limit($usersPerPage)
+            ->orderBy($sortBy, $orderBy)
+            ->get();
+        foreach ($ss as $user) {
             $users[] = [
                 'id' => $user->id,
                 'name' => $user->name,
@@ -58,6 +75,8 @@ class AdminController extends Controller
                 'group' => $user->group,
                 'created_at' => $user->created_at,
                 'subscribed' => $user->subscribed,
+                'notesCount' => $user->notesCount,
+                'commentsCount' => $user->commentsCount,
             ];
         }
         return new View(
