@@ -234,41 +234,32 @@ class UserController extends Controller
 
     public function changeGroup()
     {
-        if (!UserController::isAdmin() && !UserController::isOwner($userId)) {
+        if (!UserController::isAdmin()) {
             throw new ForbiddenException("Недостаточно прав.", 403);
         }
         $id = isset($_POST['id']) ? intval(clean($_POST['id'])) : 0;
         $group = isset($_POST['group']) ? intval(clean($_POST['group'])) : 0;
-//        $result = ['error' => false, 'message' => ''];
+        $result = "Неверные данные.";
         if (!empty($id) && !empty($group) && $group >= 1 && $group <= 3) {
             $user = User::find($id);
-//            switch ($group) {
-//                case 1:
-//                    $groupName = "Администратор";
-//                    break;
-//                case 2:
-//                    $groupName = "Контент-менеджер";
-//                    break;
-//                case 3:
-//                    $groupName = "Пользователь";
-//                    break;
-//            }
+            switch ($group) {
+                case 1:
+                    $groupName = "Администратор";
+                    break;
+                case 2:
+                    $groupName = "Контент-менеджер";
+                    break;
+                case 3:
+                    $groupName = "Пользователь";
+                    break;
+            }
             if (!empty($user)) {
                 //todo проверка на изменение своей роли. Себя менять нельзя. Иначе можно остаться без админа
                 $user->group = $group;
                 $user->save();
-                $_SESSION['user'] = [
-                    'group' => $group,
-                ];
-//                $result['message'] = "Пользователю " . $user->name . " изменены права на " . $groupName;
-//                $result['error'] = false;
-            } else {
-//                $result['error'] = true;
-                //todo выкинуть исключение - переданы неверные данные (сделать обработу этого искл)
+                $result = "Пользователю " . $user->name . " изменены права на " . $groupName;
             }
-        } else {
-//            $result['error'] = true;
         }
-//        echo json_encode($result);
+        echo $result;
     }
 }
