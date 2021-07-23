@@ -45,12 +45,8 @@ class AdminController extends Controller
         $pages = intval(($usersCount - 1) / $usersPerPage) + 1;
         $page = ($page < 1) ? 1 : $page;
         $page = ($page > $pages) ? $pages : $page;
-        $thisPageUsers = User::offset($usersPerPage * ($page - 1))
-            ->limit($usersPerPage)
-            ->orderBy($sortBy, $orderBy)
-            ->get();
         $users = [];
-        $ss = User::select(User::raw('    `users`.*,
+        $thisPageUsers = User::select(User::raw('    `users`.*,
     (SELECT 
             COUNT(`notes`.`id`)
         FROM
@@ -67,7 +63,7 @@ class AdminController extends Controller
             ->limit($usersPerPage)
             ->orderBy($sortBy, $orderBy)
             ->get();
-        foreach ($ss as $user) {
+        foreach ($thisPageUsers as $user) {
             $users[] = [
                 'id' => $user->id,
                 'name' => $user->name,
