@@ -14,7 +14,7 @@
     <?php foreach ($users as $user){ ?>
         <tr>
             <th scope="row"><?=$user['id']?></th>
-            <td><a href="/profile/<?=$user['id']?>"><?=$user['name']?></a></td>
+            <td><a href="/profile/<?=$user['id']?>"><?=$user['name'] . '/' . $user['notesCount'] . '/' . $user['commentsCount']?></a></td>
             <td><?=$user['email']?></td>
             <td>
                 <form method="post">
