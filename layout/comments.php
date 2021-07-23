@@ -38,7 +38,7 @@
     <div class="col">
         <?=pagination($page, $commentsCount, $commentsPerPage, '/comments/', $sfx)?>
     </div>
-    <div class="col"> Отображать по
+    <div class="col-2"> Отображать по
         <form method="get" id="select">
             <select class="form-select form-select-sm" id="count" name="count" aria-label="select">
                 <option <?=$commentsPerPage == 1 ? 'selected ' : ''?>="1">1</option>

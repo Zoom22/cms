@@ -7,6 +7,7 @@
         <th scope="col">E-mail</th>
         <th scope="col">Роль</th>
         <th scope="col">Зарегистрирован</th>
+        <th scope="col">Статей / Комментариев</th>
         <th scope="col" class="text-center">Подписка</th>
     </tr>
     </thead>
@@ -14,7 +15,7 @@
     <?php foreach ($users as $user){ ?>
         <tr>
             <th scope="row"><?=$user['id']?></th>
-            <td><a href="/profile/<?=$user['id']?>"><?=$user['name'] . '/' . $user['notesCount'] . '/' . $user['commentsCount']?></a></td>
+            <td><a href="/profile/<?=$user['id']?>"><?=$user['name']?></a></td>
             <td><?=$user['email']?></td>
             <td>
                 <form method="post">
@@ -26,6 +27,7 @@
                 </form>
             </td>
             <td><?=$user['created_at']?></td>
+            <td><?=$user['notesCount'] . ' / ' . $user['commentsCount']?></td>
             <td class="text-center">
                 <form class="mb-0" method="post">
                     <input type="text" name="user_id" value="<?=$user['id']?>" hidden>
@@ -43,7 +45,7 @@
     <div class="col">
         <?=pagination($page, $usersCount, $usersPerPage, '/users/', $sfx)?>
     </div>
-    <div class="col"> Отображать по
+    <div class="col-2"> Отображать по
         <form method="get" id="select">
         <select class="form-select form-select-sm" id="count" name="count" aria-label="select">
             <option <?=$usersPerPage == 1 ? 'selected ' : ''?>value="1">1</option>
