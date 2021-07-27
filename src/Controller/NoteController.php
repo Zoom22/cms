@@ -76,7 +76,15 @@ class NoteController extends Controller
             throw new \App\Exception\ForbiddenException("Недостаточно прав.", 403);
         }
         $id = $_POST['id']; //todo валидация данных
-        $note = Note::destroy($id);
+//        $note = Note::destroy($id);
+        var_dump($_POST);
+        if (isset($_POST['edit'])) {
+            echo "Редактирование";
+        } elseif (isset($_POST['delete'])) {
+            echo "Удаление";
+        } else {
+            echo "Неверные данные";
+        }
         header('location: ' . $_SERVER['REQUEST_URI']);
     }
 
