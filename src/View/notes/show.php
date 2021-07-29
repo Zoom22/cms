@@ -35,7 +35,7 @@ include APP_DIR . '/layout/header.php';
     <div class="form-label-group">
         <input name="note_id" value="<?=$note['id'] ?? false ?>" hidden>
         <label for="text" class="mt-3">Текст комментария</label>
-        <textarea rows="4" cols="10" id="text" class="form-control" placeholder="Текст комментария" name="text" value="<?=$data['text'] ?? ''?>" autofocus><?=$data['text'] ?? ''?></textarea>
+        <textarea rows="4" cols="10" id="text" class="form-control" placeholder="Текст комментария" name="text" value="<?=$data['text'] ?? ''?>"><?=$data['text'] ?? ''?></textarea>
     </div>
 
     <button class="btn btn-lg btn-primary btn-block" type="submit">Сохранить</button>

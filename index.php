@@ -14,6 +14,8 @@ $router->post('/', SubscribeController::class . '@create');
 
 $router->get('/notes/create', NoteController::class . '@create');
 $router->post('/notes/store', NoteController::class . '@store');
+$router->get('/notes/*/edit', NoteController::class . '@edit');
+$router->post('/notes/*/update', NoteController::class . '@update');
 $router->get('/notes/*', AdminController::class . '@notes');
 $router->post('/notes/*', NoteController::class . '@delete');
 

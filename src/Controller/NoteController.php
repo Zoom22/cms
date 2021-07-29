@@ -70,22 +70,75 @@ class NoteController extends Controller
         }
     }
 
+    public function edit($id)
+    {
+        if (!UserController::isModerator()) {
+            throw new \App\Exception\ForbiddenException("Недостаточно прав.", 403);
+        }
+        //вывод формы для создания страницы с загрузкой картинки
+        $thisPageNote = Note::find($id);
+        if ($thisPageNote) {
+            $note = [
+                'title' => $thisPageNote->title,
+                'text' => $thisPageNote->text,
+                'id' => $id,
+
+            ];
+        return new View('notes.edit', ['title' => 'Изменение записи в блоге', 'note' => $note]);
+    } else {
+            throw new NotFoundException('Статья не найдена', 404);
+        }
+    }
+
+    public function update($id)
+    {
+        if (!UserController::isModerator()) {
+            throw new \App\Exception\ForbiddenException("Недостаточно прав.", 403);
+        }
+        //валидация и сохранение статьи, картинки и автора
+        //вывод сообщения об её адресе /cms/page/7
+        $noteData = $this->validateNoteData();
+        if (!empty($noteData['error'])) {
+            $noteData['id'] = $id;
+            return new View(
+                'notes.edit',
+                ['title' => 'Изменение записи в блоге', 'note' => $noteData]
+            );
+        }
+
+        $note = Note::find($id);
+        if ($note) {
+            $note->title = $noteData['title'];
+            $note->text = $noteData['text'];
+            $note->save();
+            return $this->show($id);
+        } else {
+            throw new NotFoundException('Статья не найдена', 404);
+        }
+//            new View(
+//            'notes.show',
+//            [
+//                'title' => $note->title,
+//                'note' => $note,
+//            ]);
+
+    }
+
     public function delete()
     {
         if (!UserController::isModerator()) {
             throw new \App\Exception\ForbiddenException("Недостаточно прав.", 403);
         }
-        $id = $_POST['id']; //todo валидация данных
-//        $note = Note::destroy($id);
-        var_dump($_POST);
         if (isset($_POST['edit'])) {
-            echo "Редактирование";
+            //todo валидация данных
+            header('location: /notes/' . $_POST['edit'] . '/edit');
         } elseif (isset($_POST['delete'])) {
-            echo "Удаление";
+            $id = $_POST['delete']; //todo валидация данных
+            Note::destroy($id);
+            header('location: ' . $_SERVER['REQUEST_URI']);
         } else {
-            echo "Неверные данные";
+            throw new NotFoundException('Статья не найдена', 404);
         }
-        header('location: ' . $_SERVER['REQUEST_URI']);
     }
 
     public function create()
@@ -107,14 +160,14 @@ class NoteController extends Controller
 
         //вывод сообщения об её адресе /cms/page/7
         $noteData = $this->validateNoteData();
-        if (!empty($pageData['error'])) {
+        if (!empty($noteData['error'])) {
             return new View(
                 'notes.create',
                 ['title' => 'Новая запись в блоге', 'data' => $noteData]
             );
         }
         $note = Note::create([
-            'title' => $noteData['noteTitle'],
+            'title' => $noteData['title'],
             'text' => $noteData['text'],
             'user_id' => $_SESSION['user']['id'],
         ]);
@@ -139,7 +192,7 @@ class NoteController extends Controller
         } elseif (empty($_POST['text'])) {
             $result['error'] = 'Содержание страницы не может быть пустым';
         }
-        $result += ['noteTitle' => clean($_POST['title']), 'text' => $_POST['text']];
+        $result += ['title' => clean($_POST['title']), 'text' => $_POST['text']];
         return $result;
     }
 }
