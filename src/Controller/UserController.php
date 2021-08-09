@@ -38,7 +38,7 @@ class UserController extends Controller
     {
         $result = ['error' => ""];
         $emptyAllPostValues = true;
-        if (!empty($_POST) ) {
+        if (!empty($_POST)) {
             foreach ($_POST as $data) {
                 $emptyAllPostValues &= empty($data);
             }
@@ -127,7 +127,7 @@ class UserController extends Controller
     }
 
     public function logout()
-    { //todo определиться где авторизовать и разавторизовывать пользователя? Здесь или в User?
+    {
         if (isAuthorized()) {
             session_destroy();
             unset($_SESSION);
@@ -163,7 +163,6 @@ class UserController extends Controller
     public function profileEdit()
     {
 //        todo добавить проверку на авторизацию - пользователь этот профиль или админ
-        var_dump($_FILES, $_POST);
         if (empty($_FILES)) {
             if (!empty($_POST)) {
                 $id = clean($_POST['id']);
@@ -176,39 +175,39 @@ class UserController extends Controller
                 }
             }
         } else {
-                if (isset($_FILES['avatar'])) {
-                    $fileName = basename($_FILES['avatar']['name']);
-                    $uploadFile = $_SERVER['DOCUMENT_ROOT'] . '/layout/img/photo/' . $fileName;
-                    $fileChecked = false;
-                    $fileTmpName = $_FILES['avatar']['tmp_name'];
-                    if (in_array(mime_content_type($fileTmpName), ['image/jpeg','image/png'])) {
-                        $fileChecked = true;
-                    } else {
-                        $msg =  'Поддерживаются только JPEG (JPG) и PNG изображения.<br>';
-                    }
-                    //Проверка на превышение размера
-                    if ($_FILES['avatar']['size'] > 1024*1024*2) {
-                        $msg = 'Размер изображения не должен превышать 2 Мбайт.<br>';
-                        $fileChecked = false;
-                    }
-                    if($fileChecked) {
-                        if(move_uploaded_file($fileTmpName, $uploadFile)) {
-                            if (!empty($_POST)) {
-                                $id = clean($_POST['id']);
-                                $user = User::find($id);
-                                if (!empty($user)) {
-                                    $user->photo = $fileName;
-                                    $user->save();
-                                }
-                            }
-                            $msg = 'Успешно загружен <br>';
-
-                        } else {
-                            $msg = 'Ошибка ' . $_FILES['avatar']['error'] . '<br>';
-                        }
-                    }
-                    echo $msg;
+            if (isset($_FILES['avatar'])) {
+                $fileName = basename($_FILES['avatar']['name']);
+                $uploadFile = $_SERVER['DOCUMENT_ROOT'] . '/layout/img/photo/' . $fileName;
+                $fileChecked = false;
+                $fileTmpName = $_FILES['avatar']['tmp_name'];
+                if (in_array(mime_content_type($fileTmpName), ['image/jpeg', 'image/png'])) {
+                    $fileChecked = true;
+                } else {
+                    $msg = 'Поддерживаются только JPEG (JPG) и PNG изображения.<br>';
                 }
+                //Проверка на превышение размера
+                if ($_FILES['avatar']['size'] > 1024 * 1024 * 2) {
+                    $msg = 'Размер изображения не должен превышать 2 Мбайт.<br>';
+                    $fileChecked = false;
+                }
+                if ($fileChecked) {
+                    if (move_uploaded_file($fileTmpName, $uploadFile)) {
+                        if (!empty($_POST)) {
+                            $id = clean($_POST['id']);
+                            $user = User::find($id);
+                            if (!empty($user)) {
+                                $user->photo = $fileName;
+                                $user->save();
+                            }
+                        }
+                        $msg = 'Успешно загружен <br>';
+
+                    } else {
+                        $msg = 'Ошибка ' . $_FILES['avatar']['error'] . '<br>';
+                    }
+                }
+                echo $msg;
+            }
 
 
         }
@@ -217,13 +216,13 @@ class UserController extends Controller
 
     public static function isAdmin()
     {
-        return  !empty($_SESSION['user']['group']) && $_SESSION['user']['group'] == 1;
+        return !empty($_SESSION['user']['group']) && $_SESSION['user']['group'] == 1;
     }
 
     public static function isModerator()
     {
         $group = $_SESSION['user']['group'] ?? false;
-        return  !empty($group) && ($group == 2 || $group == 1);
+        return !empty($group) && ($group == 2 || $group == 1);
     }
 
     public static function isOwner($id)

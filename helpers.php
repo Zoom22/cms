@@ -2,7 +2,7 @@
 
 use \App\Model\User;
 
-function array_get($array, $key, $default = null) 
+function array_get($array, $key, $default = null)
 {
     $keys = explode('.', $key);
     $result = $array;
@@ -13,10 +13,10 @@ function array_get($array, $key, $default = null)
         $result = $result[$key];
     }
 
-     return $result;
+    return $result;
 }
 
-function includeView($templateName, $data) 
+function includeView($templateName, $data)
 {
 
     extract($data);
@@ -60,7 +60,8 @@ function isAuthorized()
 * @return string
 *
 */
-function pagination($page, $items, $itemsPerPage, $baseUrl, $sfx = '') {
+function pagination($page, $items, $itemsPerPage, $baseUrl, $sfx = '')
+{
     $pages = intval(($items - 1) / $itemsPerPage) + 1;
     if ($pages == 1) {
         return '';
@@ -68,14 +69,14 @@ function pagination($page, $items, $itemsPerPage, $baseUrl, $sfx = '') {
     $page = ($page < 1) ? 1 : $page;
     $page = ($page > $pages) ? $pages : $page;
     $pagination = '<nav aria-label="Page navigation"><ul class="pagination justify-content-center">';
-    if($pages != 1){
+    if ($pages != 1) {
         if ($page > 1) {
             $previous = $page - 1;
             $pagination .= '<li class="page-item">
                                 <a class="page-link" href="' . $baseUrl . $previous . $sfx . '">Предыдущая</a>
                             </li>';
-            for($i = $page-3; $i < $page; $i++){
-                if($i > 0){
+            for ($i = $page - 3; $i < $page; $i++) {
+                if ($i > 0) {
                     $pagination .= '<li class="page-item"><a class="page-link" href="' . $baseUrl . $i . $sfx . '">' . $i . '</a></li>';
                 }
             }
@@ -83,9 +84,9 @@ function pagination($page, $items, $itemsPerPage, $baseUrl, $sfx = '') {
         $pagination .= '<li class="page-item active" aria-current="page">
                             <span class="page-link">' . $page . '</span>
                         </li>';
-        for($i = $page + 1; $i <= $pages; $i++) {
+        for ($i = $page + 1; $i <= $pages; $i++) {
             $pagination .= '<li class="page-item"><a class="page-link" href="' . $baseUrl . $i . $sfx . '">' . $i . '</a></li>';
-            if($i >= $page+3) {
+            if ($i >= $page + 3) {
                 break;
             }
         }
@@ -107,7 +108,7 @@ function isActiveMenu($link)
     $link = trim($link, '/');
     if ($link == $uri || preg_match('/^' . $link . '\/\w+/', $uri)) {
         return 'active';
-    } elseif ($link == '' && preg_match('/^page\/\w+/', $uri)){
+    } elseif ($link == '' && preg_match('/^page\/\w+/', $uri)) {
         return 'active';
     } else {
         return '';

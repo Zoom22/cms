@@ -10,8 +10,6 @@ class StaticPageController extends Controller
 {
     public function create()
     {
-        //вывод формы создания статичной страницы
-
         if (!UserController::isModerator()) {
             throw new \App\Exception\ForbiddenException("Недостаточно прав.", 403);
         }
@@ -21,12 +19,9 @@ class StaticPageController extends Controller
 
     public function store()
     {
-        //валидация и сохранение в БД статичной страницы
         if (!UserController::isModerator()) {
             throw new \App\Exception\ForbiddenException("Недостаточно прав.", 403);
         }
-
-        //вывод сообщения об её адресе /cms/page/7
         $pageData = $this->validatePageData();
         if (!empty($pageData['error'])) {
             return new View(
@@ -80,7 +75,7 @@ class StaticPageController extends Controller
             throw new \App\Exception\ForbiddenException("Недостаточно прав.", 403);
         }
 
-        //вызов статичной страницы на редактирование
+        //todo вызов статичной страницы на редактирование
     }
 
     public function update()

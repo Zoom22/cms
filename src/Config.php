@@ -14,6 +14,7 @@ final class Config
         }
         return static::$instance;
     }
+
     public function get($config, $default = null)
     {
         return array_get($this->configs, $config, $default);

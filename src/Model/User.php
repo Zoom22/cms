@@ -23,7 +23,7 @@ class User extends Model
         }
 
         if ($setCookie) {
-            setcookie('email', $this->email, time()+60*60*24*30, "/");
+            setcookie('email', $this->email, time() + 60 * 60 * 24 * 30, "/");
         }
     }
 }

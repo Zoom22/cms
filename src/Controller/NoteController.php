@@ -10,7 +10,7 @@ use App\Model\Note;
 
 class NoteController extends Controller
 {
-    public function showAll($page = 1)
+    public function index($page = 1)
     {
         $config = Config::getInstance();
         $orderBy = $config->get('pagination.orderBy');
@@ -30,7 +30,7 @@ class NoteController extends Controller
             $notes[] = [
                 'id' => $note->id,
                 'title' => $note->title,
-                'text'  => $note->text,
+                'text' => $note->text,
                 'image' => $note->image,
                 'created_at' => $note->created_at,
             ];
@@ -40,7 +40,7 @@ class NoteController extends Controller
             [
                 'title' => 'Статьи' . ($page ? ' - ' . $page : ''),
                 'notes' => $notes,
-                'page'  => $page,
+                'page' => $page,
                 'notesCount' => $notesCount,
                 'notesPerPage' => $notesPerPage,
             ]);
@@ -59,11 +59,14 @@ class NoteController extends Controller
                 'id' => $id,
 
             ];
-//        $comments = Comment::join('users', 'author_id', '=', 'users.id')
-//            ->select('comments.*', 'users.name as author', 'users.photo')
-//            ->where('note_id', $id)
-//            ->get();
-            $comments = CommentController::getComments($id);
+            $comments = Comment::join('users', 'author_id', '=', 'users.id')
+                ->select('comments.*', 'users.name as author', 'users.photo')
+                ->where('note_id', $id)
+                ->get();
+
+// todo реализовать метод
+// $comments = CommentController::getComments($id);
+
             return new View('notes.show', ['title' => $note['title'], 'note' => $note, 'comments' => $comments]);
         } else {
             throw new NotFoundException('Статья не найдена', 404);
@@ -75,7 +78,6 @@ class NoteController extends Controller
         if (!UserController::isModerator()) {
             throw new \App\Exception\ForbiddenException("Недостаточно прав.", 403);
         }
-        //вывод формы для создания страницы с загрузкой картинки
         $thisPageNote = Note::find($id);
         if ($thisPageNote) {
             $note = [
@@ -84,8 +86,8 @@ class NoteController extends Controller
                 'id' => $id,
 
             ];
-        return new View('notes.edit', ['title' => 'Изменение записи в блоге', 'note' => $note]);
-    } else {
+            return new View('notes.edit', ['title' => 'Изменение записи в блоге', 'note' => $note]);
+        } else {
             throw new NotFoundException('Статья не найдена', 404);
         }
     }
@@ -95,8 +97,6 @@ class NoteController extends Controller
         if (!UserController::isModerator()) {
             throw new \App\Exception\ForbiddenException("Недостаточно прав.", 403);
         }
-        //валидация и сохранение статьи, картинки и автора
-        //вывод сообщения об её адресе /cms/page/7
         $noteData = $this->validateNoteData();
         if (!empty($noteData['error'])) {
             $noteData['id'] = $id;
@@ -115,13 +115,6 @@ class NoteController extends Controller
         } else {
             throw new NotFoundException('Статья не найдена', 404);
         }
-//            new View(
-//            'notes.show',
-//            [
-//                'title' => $note->title,
-//                'note' => $note,
-//            ]);
-
     }
 
     public function delete()
@@ -146,7 +139,6 @@ class NoteController extends Controller
         if (!UserController::isModerator()) {
             throw new \App\Exception\ForbiddenException("Недостаточно прав.", 403);
         }
-        //вывод формы для создания страницы с загрузкой картинки
 
         return new View('notes.create', ['title' => 'Новая запись в блоге']);
     }
@@ -156,9 +148,6 @@ class NoteController extends Controller
         if (!UserController::isModerator()) {
             throw new \App\Exception\ForbiddenException("Недостаточно прав.", 403);
         }
-        //валидация и сохранение статьи, картинки и автора
-
-        //вывод сообщения об её адресе /cms/page/7
         $noteData = $this->validateNoteData();
         if (!empty($noteData['error'])) {
             return new View(

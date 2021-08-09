@@ -2,7 +2,7 @@
 
 namespace App;
 
-class Route 
+class Route
 {
     private $method;
     private $path;
@@ -13,7 +13,7 @@ class Route
         $this->method = $method;
         $this->path = $path;
         $this->callback = $callback;
-    } 
+    }
 
     private function prepareCallback($callback)
     {
