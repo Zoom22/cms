@@ -20,7 +20,7 @@ class View implements Renderable
         if (file_exists($this->template)) {
             includeView($this->template, $this->data);
         } else {
-            throw new NotFoundException("Страница не найдена", 404);      
+            throw new NotFoundException("Страница не найдена", 404);
         }
     }
 }

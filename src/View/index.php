@@ -3,7 +3,7 @@
 include APP_DIR . '/layout/header.php';
 
 foreach ($notes as $key => $note) {
-        include APP_DIR . '/layout/note.php';
+    include APP_DIR . '/layout/note.php';
 }
 echo '<hr class="featurette-divider">';
 

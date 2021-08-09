@@ -10,8 +10,8 @@ const toggleHidden = (...fields) => {
     });
 };
 
-$(function(){
-    $("#form").on("submit", function(e){
+$(function () {
+    $("#form").on("submit", function (e) {
         e.preventDefault();
         const about = document.querySelector('#about');
         const textarea = document.querySelector('#textarea');
@@ -50,8 +50,8 @@ if (count) {
     });
 }
 
-$(function(){
-    $("#subscribe").on("submit", function(e){
+$(function () {
+    $("#subscribe").on("submit", function (e) {
         e.preventDefault();
         const error = document.querySelector('#error');
         const success = document.querySelector('#success');
@@ -75,15 +75,15 @@ $(function(){
     });
 });
 
-$(function(){
-    $(".group").on("change", function(e){
+$(function () {
+    $(".group").on("change", function (e) {
         e.preventDefault();
         var id = $(this).attr('data-user_id');
         var group = $(this).val();
         $.ajax({
             url: "/users/change",
             type: "POST",
-            data: { 'id' : id, 'group' : group },
+            data: {'id': id, 'group': group},
             cache: false,
             success: function (data) {
                 console.log(data);

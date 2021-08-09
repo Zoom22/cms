@@ -9,8 +9,6 @@ class SubscribeController extends Controller
 {
     public function subscribe()
     {
-        //Как тут быть с разграничением прав?
-        //вариант владелец по user_id или админ
         $id = isset($_POST['id']) ? intval(clean($_POST['id'])) : 0;
         $userId = isset($_POST['user_id']) ? intval(clean($_POST['user_id'])) : 0;
         if (!UserController::isAdmin() && !UserController::isOwner($userId)) {
@@ -34,14 +32,13 @@ class SubscribeController extends Controller
             }
         }
 
-
-
         //todo else выкинуть Exception - пользователь не найден.
         header('location: ' . $_SERVER['REQUEST_URI']);
     }
 
     public function delete()
     {
+        //todo валидация данных
         $id = $_POST['id'];
         Subscriber::destroy($id);
         header('location: ' . $_SERVER['REQUEST_URI']);
@@ -58,8 +55,8 @@ class SubscribeController extends Controller
         }
         if (empty($error)) {
             $subscriber = new Subscriber();
-            $subscriber->email= $email;
-            $user = User::where('email', $email)->first ();
+            $subscriber->email = $email;
+            $user = User::where('email', $email)->first();
             if (!empty($user)) {
                 $user->update(['subscribed' => 1]);
                 $subscriber->user_id = $user->id;

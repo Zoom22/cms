@@ -1,24 +1,31 @@
 <?php
 
 error_reporting(E_ALL);
-ini_set('display_errors',true);
+ini_set('display_errors', true);
 
 require_once 'bootstrap.php';
 
 use App\{Router, Application};
-use App\Controller\{UserController, SubscribeController, NoteController, CommentController, StaticPageController, AdminController};
+use App\Controller\{UserController,
+    SubscribeController,
+    NoteController,
+    CommentController,
+    StaticPageController,
+    AdminController};
 
 $router = new Router();
-$router->get('/', NoteController::class . '@showAll'); //переделать на показ через show, если не передан $id
+$router->get('/', NoteController::class . '@index');
 $router->post('/', SubscribeController::class . '@create');
 
 $router->get('/notes/create', NoteController::class . '@create');
 $router->post('/notes/store', NoteController::class . '@store');
+$router->get('/notes/*/edit', NoteController::class . '@edit');
+$router->post('/notes/*/update', NoteController::class . '@update');
 $router->get('/notes/*', AdminController::class . '@notes');
 $router->post('/notes/*', NoteController::class . '@delete');
 
 $router->get('/note/*', NoteController::class . '@show');
-$router->get('/page/*', NoteController::class . '@showAll');
+$router->get('/page/*', NoteController::class . '@index');
 $router->get('/static/create', StaticPageController::class . '@create');
 $router->post('/static/store', StaticPageController::class . '@store');
 $router->get('/statics/*', AdminController::class . '@statics');

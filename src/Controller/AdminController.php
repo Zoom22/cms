@@ -9,14 +9,9 @@ use App\Model\{Comment, Page, User, Subscriber, Note};
 
 class AdminController extends Controller
 {
-    //todo повторяющийся код в каждом методе унифицировать и вынести куда-нибудь
+    //todo повторяющийся код в каждом вынести куда-нибудь
     public function users($page = 1)
     {
-        //todo подумать на счет вывода количества статей и комментариев
-
-        //todo подумать как хранить настойки интерфейса для текущего пользователя
-        //скорее всего в куках
-
         if (!UserController::isAdmin()) {
             throw new ForbiddenException("Недостаточно прав.", 403);
         }
@@ -67,7 +62,7 @@ class AdminController extends Controller
             $users[] = [
                 'id' => $user->id,
                 'name' => $user->name,
-                'email'  => $user->email,
+                'email' => $user->email,
                 'group' => $user->group,
                 'created_at' => $user->created_at,
                 'subscribed' => $user->subscribed,
@@ -81,13 +76,13 @@ class AdminController extends Controller
                 'title' => 'Пользователи' . ($page ? ' - ' . $page : ''),
                 'users' => $users,
                 'activeUserId' => $_SESSION['user']['id'],
-                'page'  => $page,
+                'page' => $page,
                 'usersCount' => $usersCount,
                 'usersPerPage' => $usersPerPage,
                 'sfx' => $sfx,
             ]);
     }
-//может перенести в SubscribeController?
+
     public function subscribers($page = 1)
     {
         if (!UserController::isAdmin()) {
@@ -125,7 +120,7 @@ class AdminController extends Controller
             $name = is_object($user->user) ? $user->user->name : '';
             $users[] = [
                 'id' => $user->id,
-                'email'  => $user->email,
+                'email' => $user->email,
                 'user_id' => $user->user_id,
                 'name' => $name,
                 'created_at' => $user->created_at,
@@ -137,7 +132,7 @@ class AdminController extends Controller
             [
                 'title' => 'Подписчики' . ($page ? ' - ' . $page : ''),
                 'users' => $users,
-                'page'  => $page,
+                'page' => $page,
                 'usersCount' => $usersCount,
                 'usersPerPage' => $usersPerPage,
                 'sfx' => $sfx,
@@ -180,7 +175,7 @@ class AdminController extends Controller
         foreach ($thisPageNotes as $note) {
             $notes[] = [
                 'id' => $note->id,
-                'title'  => $note->title,
+                'title' => $note->title,
                 'image' => $note->image,
                 'updated_at' => $note->updated_at,
                 'name' => $note->user->name,
@@ -193,7 +188,7 @@ class AdminController extends Controller
             [
                 'title' => 'Статьи' . ($page ? ' - ' . $page : ''),
                 'notes' => $notes,
-                'page'  => $page,
+                'page' => $page,
                 'notesCount' => $notesCount,
                 'notesPerPage' => $notesPerPage,
                 'sfx' => $sfx,
@@ -238,10 +233,10 @@ class AdminController extends Controller
         foreach ($thisPageComments as $comment) {
             $comments[] = [
                 'id' => $comment->id,
-                'author'  => $comment->author,
-                'author_id'  => $comment->author_id,
-                'note_id'  => $comment->note_id,
-                'text'  => $comment->text,
+                'author' => $comment->author,
+                'author_id' => $comment->author_id,
+                'note_id' => $comment->note_id,
+                'text' => $comment->text,
                 'updated_at' => $comment->updated_at,
                 'published' => $comment->published,
             ];
@@ -252,13 +247,12 @@ class AdminController extends Controller
             [
                 'title' => 'Страницы' . ($page ? ' - ' . $page : ''),
                 'comments' => $comments,
-                'page'  => $page,
+                'page' => $page,
                 'commentsCount' => $commentsCount,
                 'commentsPerPage' => $commentsPerPage,
                 'sfx' => $sfx,
             ]);
     }
-
 
     public function statics($page = 1)
     {
@@ -296,7 +290,7 @@ class AdminController extends Controller
         foreach ($thisPageStatics as $static) {
             $statics[] = [
                 'id' => $static->id,
-                'title'  => $static->title,
+                'title' => $static->title,
                 'updated_at' => $static->updated_at,
             ];
         }
@@ -306,7 +300,7 @@ class AdminController extends Controller
             [
                 'title' => 'Страницы' . ($page ? ' - ' . $page : ''),
                 'statics' => $statics,
-                'page'  => $page,
+                'page' => $page,
                 'staticsCount' => $staticsCount,
                 'staticsPerPage' => $staticsPerPage,
                 'sfx' => $sfx,
